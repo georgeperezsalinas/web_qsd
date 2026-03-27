@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  qsdsoft-web:
+    build: .
+    image: qsdsoft-web:latest
+    container_name: qsdsoft-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    # Uncomment if using a reverse proxy (Traefik / Nginx Proxy Manager):
+    # networks:
+    #   - proxy
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.qsdsoft.rule=Host(`qsdsoft.com`)"
+    #   - "traefik.http.routers.qsdsoft.entrypoints=websecure"
+    #   - "traefik.http.routers.qsdsoft.tls.certresolver=letsencrypt"
+
+# networks:
+#   proxy:
+#     external: true

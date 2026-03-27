@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QSD Soft — Soluciones Tecnológicas</title>
+  <meta name="description" content="QSD Soft: soluciones tecnológicas de vanguardia. Rescate técnico, desarrollo de software y analítica de datos en Lima, Perú." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --c-bg:       #04050a;
+      --c-surface:  #0b0d18;
+      --c-border:   rgba(255,255,255,0.07);
+      --c-accent:   #00e5ff;
+      --c-accent2:  #7b5ea7;
+      --c-text:     #e8eaf0;
+      --c-muted:    #8890a8;
+      --c-white:    #ffffff;
+      --radius:     12px;
+      --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+      --font-head:  'Syne', sans-serif;
+      --font-body:  'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE GRAIN OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.4;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--c-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--c-accent); border-radius: 4px; }
+
+    /* ─── TOPBAR ─── */
+    .topbar {
+      background: rgba(0,229,255,0.05);
+      border-bottom: 1px solid var(--c-border);
+      padding: 8px 0;
+      font-size: 0.8rem;
+      color: var(--c-muted);
+    }
+    .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .topbar a { color: var(--c-muted); text-decoration: none; transition: color var(--transition); }
+    .topbar a:hover { color: var(--c-accent); }
+    .topbar .contact-info { display: flex; gap: 20px; align-items: center; }
+    .topbar .contact-info i { margin-right: 6px; color: var(--c-accent); }
+    .topbar .social-links { display: flex; gap: 14px; }
+    .topbar .social-links a { font-size: 1rem; }
+
+    /* ─── HEADER / NAV ─── */
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(4,5,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .branding { padding: 16px 0; }
+    .branding .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--c-accent), var(--c-accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: #000;
+    }
+    .logo-text { font-family: var(--font-head); font-weight: 800; font-size: 1.4rem; color: var(--c-white); letter-spacing: -0.02em; }
+    .logo-text span { color: var(--c-accent); }
+
+    nav ul { list-style: none; display: flex; gap: 6px; align-items: center; }
+    nav ul li a {
+      text-decoration: none; color: var(--c-muted);
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.02em;
+      padding: 8px 14px; border-radius: 8px; transition: all var(--transition);
+    }
+    nav ul li a:hover, nav ul li a.active { color: var(--c-white); background: rgba(0,229,255,0.08); }
+    .nav-cta {
+      background: var(--c-accent) !important; color: #000 !important;
+      font-weight: 700 !important; letter-spacing: 0.03em;
+    }
+    .nav-cta:hover { background: #33ecff !important; transform: translateY(-1px); }
+
+    .mobile-toggle { display: none; background: none; border: 1px solid var(--c-border); color: var(--c-text); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 0;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 20% 50%, rgba(0,229,255,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 30%, rgba(123,94,167,0.1) 0%, transparent 60%),
+        var(--c-bg);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; z-index: 0; opacity: 0.04;
+      background-image:
+        linear-gradient(var(--c-accent) 1px, transparent 1px),
+        linear-gradient(90deg, var(--c-accent) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-left {
+      position: relative; z-index: 1;
+      padding: 80px 60px 80px 0;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid rgba(0,229,255,0.3);
+      background: rgba(0,229,255,0.05);
+      font-size: 0.75rem; font-weight: 500; color: var(--c-accent);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 28px;
+      animation: fadeInDown 0.6s ease both;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--c-accent); animation: pulse 2s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-weight: 800; font-size: clamp(2.6rem, 4.5vw, 4.2rem);
+      line-height: 1.08; letter-spacing: -0.03em;
+      color: var(--c-white); margin-bottom: 24px;
+      animation: fadeInDown 0.7s 0.1s ease both;
+    }
+    .hero-title em { font-style: normal; color: var(--c-accent); }
+    .hero-title .line2 { display: block; color: var(--c-muted); font-size: 0.7em; font-weight: 600; }
+
+    .hero-desc {
+      font-size: 1.05rem; color: var(--c-muted); max-width: 520px;
+      margin-bottom: 40px; animation: fadeInDown 0.7s 0.2s ease both;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeInDown 0.7s 0.3s ease both; }
+
+    .btn-primary {
+      padding: 14px 28px; border-radius: 10px;
+      background: var(--c-accent); color: #000;
+      font-family: var(--font-head); font-weight: 700; font-size: 0.9rem;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: all var(--transition); border: none; cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { background: #33ecff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.3); }
+
+    .btn-secondary {
+      padding: 14px 28px; border-radius: 10px;
+      background: transparent; color: var(--c-text);
+      font-family: var(--font-head); font-weight: 600; font-size: 0.9rem;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: all var(--transition); border: 1px solid var(--c-border);
+      letter-spacing: 0.02em;
+    }
+    .btn-secondary:hover { border-color: rgba(0,229,255,0.4); color: var(--c-white); background: rgba(0,229,255,0.05); }
+
+    .hero-right {
+      position: relative; z-index: 1;
+      padding: 80px 0 80px 60px;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    /* ─── FEATURED SERVICE CARD ─── */
+    .featured-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 20px; padding: 36px;
+      max-width: 420px; width: 100%;
+      position: relative; overflow: hidden;
+      animation: fadeInRight 0.8s 0.4s ease both;
+    }
+    .featured-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+    }
+    .badge-featured {
+      display: inline-block; padding: 4px 12px; border-radius: 100px;
+      background: rgba(0,229,255,0.1); color: var(--c-accent);
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .featured-card h3 {
+      font-family: var(--font-head); font-weight: 700; font-size: 1.35rem;
+      color: var(--c-white); margin-bottom: 14px; letter-spacing: -0.02em;
+    }
+    .featured-card p { font-size: 0.88rem; color: var(--c-muted); margin-bottom: 18px; }
+    .featured-list { list-style: none; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; }
+    .featured-list li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.85rem; color: var(--c-text);
+    }
+    .featured-list li::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--c-accent); flex-shrink: 0;
+    }
+    .featured-card .btn-primary { width: 100%; justify-content: center; }
+
+    /* ─── HERO STATS ─── */
+    .hero-stats {
+      position: relative; z-index: 1;
+      grid-column: 1 / -1;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--c-border);
+      border-top: 1px solid var(--c-border);
+      animation: fadeInUp 0.8s 0.5s ease both;
+    }
+    .stat-item {
+      background: var(--c-bg); padding: 28px 32px;
+      transition: background var(--transition);
+    }
+    .stat-item:hover { background: rgba(0,229,255,0.03); }
+    .stat-num {
+      font-family: var(--font-head); font-weight: 800; font-size: 2.2rem;
+      color: var(--c-white); letter-spacing: -0.04em;
+    }
+    .stat-num span { color: var(--c-accent); }
+    .stat-label { font-size: 0.82rem; color: var(--c-muted); margin-top: 4px; }
+
+    /* ─── SECTIONS SHARED ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 100px 0; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--c-accent); margin-bottom: 16px;
+    }
+    .section-label::before, .section-label::after { content: '—'; opacity: 0.5; }
+
+    .section-title {
+      font-family: var(--font-head); font-weight: 800;
+      font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.03em;
+      color: var(--c-white); margin-bottom: 18px; line-height: 1.1;
+    }
+    .section-title em { font-style: normal; color: var(--c-accent); }
+    .section-desc { color: var(--c-muted); font-size: 1.02rem; max-width: 580px; }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--c-surface); position: relative; overflow: hidden; }
+    #services::before {
+      content: '';
+      position: absolute; right: -200px; top: 50%; transform: translateY(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(123,94,167,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .services-header { margin-bottom: 60px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    .service-card {
+      background: var(--c-bg); border: 1px solid var(--c-border);
+      border-radius: var(--radius); padding: 36px 30px;
+      transition: all var(--transition); position: relative; overflow: hidden;
+      cursor: pointer;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+      transform: scaleX(0); transform-origin: left; transition: transform var(--transition);
+    }
+    .service-card:hover { border-color: rgba(0,229,255,0.2); transform: translateY(-4px); }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: var(--c-accent); margin-bottom: 24px;
+      transition: all var(--transition);
+    }
+    .service-card:hover .service-icon {
+      background: rgba(0,229,255,0.15); transform: scale(1.05);
+    }
+    .service-card h3 {
+      font-family: var(--font-head); font-weight: 700; font-size: 1.15rem;
+      color: var(--c-white); margin-bottom: 12px; letter-spacing: -0.01em;
+    }
+    .service-card p { font-size: 0.88rem; color: var(--c-muted); line-height: 1.7; }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.82rem; font-weight: 600; color: var(--c-accent);
+      text-decoration: none; margin-top: 20px; letter-spacing: 0.02em;
+      transition: gap var(--transition);
+    }
+    .service-card:hover .service-link { gap: 10px; }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--c-bg); position: relative; overflow: hidden; }
+    #about::before {
+      content: '';
+      position: absolute; left: -300px; bottom: 0;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-visual { position: relative; }
+    .about-img-frame {
+      border-radius: 20px; overflow: hidden; position: relative;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--c-surface) 0%, rgba(0,229,255,0.05) 100%);
+      border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-img-placeholder {
+      font-size: 5rem; opacity: 0.15; color: var(--c-accent);
+    }
+    .about-badge-float {
+      position: absolute; bottom: -20px; right: -20px;
+      background: var(--c-accent); color: #000;
+      border-radius: 16px; padding: 16px 20px;
+      font-family: var(--font-head); font-weight: 800;
+    }
+    .about-badge-float .num { font-size: 1.8rem; line-height: 1; display: block; }
+    .about-badge-float .lbl { font-size: 0.72rem; letter-spacing: 0.06em; }
+
+    .about-content .section-label { margin-bottom: 8px; }
+    .about-content .section-title { margin-bottom: 24px; }
+    .about-desc { color: var(--c-muted); margin-bottom: 32px; font-style: italic; font-size: 0.98rem; }
+    .about-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+    .about-list li {
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .about-list .icon-check {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-accent); font-size: 0.85rem; flex-shrink: 0; margin-top: 2px;
+    }
+    .about-list li p { font-size: 0.9rem; color: var(--c-muted); }
+    .about-list li strong { display: block; color: var(--c-text); font-weight: 500; margin-bottom: 2px; }
+
+    /* ─── RESCUE SECTION ─── */
+    #rescue {
+      background: linear-gradient(135deg, #060812 0%, #0c0e1c 100%);
+      position: relative; overflow: hidden;
+    }
+    #rescue::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0,229,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .rescue-inner {
+      max-width: 900px; margin: 0 auto;
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 24px; padding: 60px;
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .rescue-inner::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--c-accent), var(--c-accent2), transparent);
+    }
+    .rescue-inner .section-label { justify-content: center; }
+    .rescue-inner .section-title { max-width: 100%; }
+    .rescue-inner .section-desc { margin: 0 auto 40px; text-align: center; }
+
+    .rescue-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 40px; text-align: left; }
+    .rescue-item {
+      background: rgba(0,229,255,0.04); border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 10px; padding: 18px 20px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.88rem; color: var(--c-text);
+      transition: all var(--transition);
+    }
+    .rescue-item:hover { background: rgba(0,229,255,0.08); border-color: rgba(0,229,255,0.2); }
+    .rescue-item i { color: var(--c-accent); font-size: 1.1rem; flex-shrink: 0; }
+
+    /* ─── CLIENTS ─── */
+    #clients { background: var(--c-surface); overflow: hidden; }
+    .clients-header { text-align: center; margin-bottom: 50px; }
+    .clients-header .section-label { justify-content: center; }
+    .clients-header .section-desc { margin: 0 auto; text-align: center; }
+
+    .clients-track-wrap { overflow: hidden; position: relative; }
+    .clients-track-wrap::before,
+    .clients-track-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
+      pointer-events: none;
+    }
+    .clients-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--c-surface), transparent); }
+    .clients-track-wrap::after { right: 0; background: linear-gradient(-90deg, var(--c-surface), transparent); }
+
+    .clients-track {
+      display: flex; gap: 48px; animation: scroll 30s linear infinite;
+      width: max-content;
+    }
+    .clients-track:hover { animation-play-state: paused; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .client-logo {
+      display: flex; align-items: center; justify-content: center;
+      min-width: 130px; height: 54px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+      border-radius: 10px; padding: 12px 20px;
+      font-family: var(--font-head); font-weight: 700; font-size: 0.85rem;
+      color: var(--c-muted); letter-spacing: 0.05em; text-transform: uppercase;
+      transition: all var(--transition);
+    }
+    .client-logo:hover { color: var(--c-white); border-color: rgba(0,229,255,0.3); }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--c-bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
+    .contact-info-col .section-title { font-size: clamp(1.8rem,2.5vw,2.4rem); }
+    .contact-info-col .section-desc { margin-bottom: 36px; }
+
+    .contact-detail {
+      display: flex; gap: 16px; align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .contact-detail-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-accent); font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-detail-text strong { display: block; color: var(--c-text); font-weight: 500; margin-bottom: 2px; }
+    .contact-detail-text a, .contact-detail-text span { color: var(--c-muted); text-decoration: none; font-size: 0.9rem; }
+    .contact-detail-text a:hover { color: var(--c-accent); }
+
+    .contact-social { display: flex; gap: 10px; margin-top: 32px; }
+    .social-btn {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-muted); text-decoration: none; font-size: 1rem;
+      transition: all var(--transition);
+    }
+    .social-btn:hover { background: rgba(0,229,255,0.1); color: var(--c-accent); border-color: rgba(0,229,255,0.3); }
+
+    /* ─── FORM ─── */
+    .contact-form {
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 20px; padding: 40px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 0.8rem; font-weight: 500; color: var(--c-muted);
+      letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; padding: 12px 16px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+      border-radius: 8px; color: var(--c-text);
+      font-family: var(--font-body); font-size: 0.92rem;
+      transition: all var(--transition); outline: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--c-accent); background: rgba(0,229,255,0.03);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--c-surface); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-submit {
+      width: 100%; padding: 15px;
+      background: var(--c-accent); color: #000;
+      font-family: var(--font-head); font-weight: 700; font-size: 0.95rem;
+      border: none; border-radius: 10px; cursor: pointer; letter-spacing: 0.02em;
+      transition: all var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .form-submit:hover { background: #33ecff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.3); }
+
+    .form-status { display: none; padding: 12px 16px; border-radius: 8px; font-size: 0.88rem; margin-top: 16px; }
+    .form-status.success { background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); color: var(--c-accent); display: block; }
+    .form-status.error { background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.3); color: #ff5050; display: block; }
+
+    /* ─── NEWSLETTER ─── */
+    .newsletter-strip {
+      background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(123,94,167,0.08));
+      border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);
+      padding: 60px 0;
+    }
+    .newsletter-inner { display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
+    .newsletter-text h3 { font-family: var(--font-head); font-weight: 700; font-size: 1.4rem; color: var(--c-white); margin-bottom: 6px; }
+    .newsletter-text p { color: var(--c-muted); font-size: 0.9rem; }
+    .newsletter-form { display: flex; gap: 10px; }
+    .newsletter-form input {
+      padding: 12px 18px; background: rgba(255,255,255,0.06);
+      border: 1px solid var(--c-border); border-radius: 8px;
+      color: var(--c-text); font-family: var(--font-body); font-size: 0.9rem;
+      outline: none; min-width: 260px; transition: border-color var(--transition);
+    }
+    .newsletter-form input:focus { border-color: var(--c-accent); }
+    .newsletter-form button { white-space: nowrap; }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--c-surface); padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { color: var(--c-muted); font-size: 0.88rem; margin: 16px 0 20px; max-width: 280px; }
+    .footer-contact p { font-size: 0.85rem; color: var(--c-muted); margin-bottom: 4px; }
+    .footer-contact strong { color: var(--c-text); }
+
+    footer h4 { font-family: var(--font-head); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 18px; }
+    footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    footer ul a { text-decoration: none; color: var(--c-muted); font-size: 0.88rem; display: flex; align-items: center; gap: 8px; transition: color var(--transition); }
+    footer ul a:hover { color: var(--c-accent); }
+    footer ul a i { font-size: 0.7rem; opacity: 0.6; }
+
+    .footer-bottom { border-top: 1px solid var(--c-border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.82rem; color: var(--c-muted); }
+    .footer-bottom a { color: var(--c-accent); text-decoration: none; }
+
+    /* ─── SCROLL TOP ─── */
+    #scroll-top {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--c-accent); color: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; text-decoration: none;
+      opacity: 0; pointer-events: none; transition: all var(--transition);
+      box-shadow: 0 4px 16px rgba(0,229,255,0.3);
+    }
+    #scroll-top.visible { opacity: 1; pointer-events: all; }
+    #scroll-top:hover { background: #33ecff; transform: translateY(-3px); }
+
+    /* ─── WHATSAPP BTN ─── */
+    .whatsapp-float {
+      position: fixed; bottom: 80px; right: 28px; z-index: 999;
+      width: 48px; height: 48px; border-radius: 12px;
+      background: #25D366; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: all var(--transition);
+    }
+    .whatsapp-float:hover { background: #1ebe5d; transform: translateY(-3px); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp   { from { opacity: 0; transform: translateY(20px);  } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInRight{ from { opacity: 0; transform: translateX(30px);  } to { opacity: 1; transform: translateX(0); } }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── MOBILE NAV ─── */
+    .mobile-nav {
+      display: none; position: fixed; inset: 0; z-index: 2000;
+      background: rgba(4,5,10,0.98); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      padding: 24px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: var(--c-text); text-decoration: none; font-family: var(--font-head);
+      font-weight: 700; font-size: 2rem; letter-spacing: -0.02em;
+      transition: color var(--transition); padding: 8px;
+    }
+    .mobile-nav a:hover { color: var(--c-accent); }
+    .mobile-nav-close {
+      position: absolute; top: 24px; right: 24px;
+      background: none; border: 1px solid var(--c-border); color: var(--c-text);
+      padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 80px 0 40px; }
+      .hero-right { padding: 0 0 60px; display: none; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-visual { order: -1; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .mobile-toggle { display: block; }
+      .services-grid { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .rescue-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .newsletter-inner { flex-direction: column; }
+      .newsletter-form { width: 100%; flex-direction: column; }
+      .newsletter-form input { min-width: 0; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .topbar .contact-info { flex-wrap: wrap; gap: 8px; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.2rem; }
+      section { padding: 70px 0; }
+      .rescue-inner { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container">
+    <div class="contact-info">
+      <span><i class="bi bi-envelope"></i><a href="mailto:ventas@qsdsoft.com">ventas@qsdsoft.com</a></span>
+      <span><i class="bi bi-phone"></i>+51 921 459 342</span>
+      <span><i class="bi bi-geo-alt"></i>Lima, Perú</span>
+    </div>
+    <div class="social-links">
+      <a href="#" title="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+      <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="branding">
+    <div class="container">
+      <a href="#" class="logo">
+        <div class="logo-mark">Q</div>
+        <span class="logo-text">QSD<span>Soft</span></span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#" class="active">Inicio</a></li>
+          <li><a href="#about">Nosotros</a></li>
+          <li><a href="#services">Servicios</a></li>
+          <li><a href="#rescue">Rescate Técnico</a></li>
+          <li><a href="#clients">Clientes</a></li>
+          <li><a href="#contact" class="nav-cta">Contacto</a></li>
+        </ul>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menú"><i class="bi bi-list"></i></button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileClose"><i class="bi bi-x-lg"></i></button>
+  <a href="#" onclick="closeMobile()">Inicio</a>
+  <a href="#about" onclick="closeMobile()">Nosotros</a>
+  <a href="#services" onclick="closeMobile()">Servicios</a>
+  <a href="#rescue" onclick="closeMobile()">Rescate Técnico</a>
+  <a href="#clients" onclick="closeMobile()">Clientes</a>
+  <a href="#contact" onclick="closeMobile()">Contacto</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-left container" style="grid-column:1;padding-left:24px;padding-right:24px;max-width:680px;">
+    <div class="hero-badge">
+      <i class="bi bi-cpu-fill" style="font-size:0.8rem;"></i>
+      Soluciones Tecnológicas · Lima, Perú
+    </div>
+    <h1 class="hero-title">
+      Transformamos<br><em>ideas</em> en<br>
+      <span class="line2">realidades digitales exitosas</span>
+    </h1>
+    <p class="hero-desc">
+      En QSD Soft combinamos creatividad y tecnología de vanguardia para desarrollar productos y servicios que impulsan a las organizaciones hacia el futuro digital.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary"><i class="bi bi-arrow-right-circle"></i>Comenzar proyecto</a>
+      <a href="#services" class="btn-secondary"><i class="bi bi-grid-3x3-gap"></i>Ver servicios</a>
+    </div>
+  </div>
+
+  <div class="hero-right" style="padding-left:60px;">
+    <div class="featured-card">
+      <span class="badge-featured"><i class="bi bi-lightning-charge-fill"></i> Servicio destacado</span>
+      <h3>Rescate Técnico y Seguridad Operativa</h3>
+      <p>Intervenimos sistemas institucionales críticos. Dejamos control, documentación y estabilidad en 30 días.</p>
+      <ul class="featured-list">
+        <li>Diagnóstico técnico profundo</li>
+        <li>Reducción inmediata de riesgos críticos</li>
+        <li>Corrección de errores en producción</li>
+        <li>Control operativo y trazabilidad</li>
+      </ul>
+      <a href="#rescue" class="btn-primary"><i class="bi bi-shield-check"></i>Solicitar evaluación técnica</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num" data-target="232">0<span>+</span></div>
+      <div class="stat-label">Clientes satisfechos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="521">0<span>+</span></div>
+      <div class="stat-label">Proyectos entregados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="1453">0<span>+</span></div>
+      <div class="stat-label">Horas de soporte</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="30">0</div>
+      <div class="stat-label">Días de intervención</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="section-label">Lo que hacemos</div>
+      <h2 class="section-title">Nuestros <em>Servicios</em></h2>
+      <p class="section-desc">Soluciones integrales que cubren el ciclo completo de transformación digital de tu organización.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="bi bi-cpu"></i></div>
+        <h3>Innovación Tecnológica</h3>
+        <p>Aplicamos las últimas tecnologías para mantenerte a la vanguardia. Transformamos procesos, mejoramos eficiencia y abrimos nuevas oportunidades de negocio.</p>
+        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon"><i class="bi bi-code-slash"></i></div>
+        <h3>Desarrollo de Software</h3>
+        <p>Transformamos ideas en soluciones robustas. Aplicaciones y sistemas a medida que se adaptan perfectamente a las necesidades de tu negocio.</p>
+        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon"><i class="bi bi-bar-chart-line"></i></div>
+        <h3>Analítica de Datos</h3>
+        <p>Transformamos datos en conocimiento estratégico. Análisis profundo y visualización de datos complejos para decisiones informadas y basadas en evidencia.</p>
+        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="bi bi-shield-lock"></i></div>
+        <h3>Seguridad Operativa</h3>
+        <p>Protegemos la continuidad de tus sistemas. Auditorías de seguridad, hardening de infraestructura y respuesta a incidentes críticos en producción.</p>
+        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+        <h3>Infraestructura Cloud</h3>
+        <p>Migración, despliegue y optimización en la nube. Arquitecturas escalables con AWS, Azure o GCP adaptadas a tu presupuesto y necesidades.</p>
+        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon"><i class="bi bi-diagram-3"></i></div>
+        <h3>Integración de Sistemas</h3>
+        <p>Conectamos tus plataformas para flujos de trabajo sin fricción. APIs, microservicios y middleware que unifican el ecosistema tecnológico de tu empresa.</p>
+        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-img-frame">
+          <i class="bi bi-building about-img-placeholder"></i>
+        </div>
+        <div class="about-badge-float">
+          <span class="num">10+</span>
+          <span class="lbl">AÑOS DE EXPERIENCIA</span>
+        </div>
+      </div>
+      <div class="about-content reveal">
+        <div class="section-label">Quiénes somos</div>
+        <h2 class="section-title">Sobre <em>QSD Soft</em></h2>
+        <p class="about-desc">
+          En QSD, nos dedicamos a ofrecer soluciones tecnológicas de vanguardia que transforman ideas en realidades exitosas. Con un equipo de expertos comprometidos, combinamos creatividad y tecnología.
+        </p>
+        <ul class="about-list">
+          <li>
+            <div class="icon-check"><i class="bi bi-check2"></i></div>
+            <div>
+              <strong>Innovación Tecnológica</strong>
+              <p>Aplicamos las últimas tecnologías y tendencias para mantenerte a la vanguardia del mercado.</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon-check"><i class="bi bi-check2"></i></div>
+            <div>
+              <strong>Desarrollo de Software Personalizado</strong>
+              <p>Creamos aplicaciones y sistemas a medida que impulsan la eficiencia de tu negocio.</p>
+            </div>
+          </li>
+          <li>
+            <div class="icon-check"><i class="bi bi-check2"></i></div>
+            <div>
+              <strong>Analítica de Datos Avanzada</strong>
+              <p>Transformamos tus datos en insights valiosos para decisiones estratégicas basadas en evidencia.</p>
+            </div>
+          </li>
+        </ul>
+        <a href="#contact" class="btn-primary"><i class="bi bi-chat-dots"></i>Contáctanos hoy</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESCUE TÉCNICO -->
+<section id="rescue">
+  <div class="container">
+    <div class="rescue-inner reveal">
+      <div class="section-label"><i class="bi bi-lightning-charge-fill"></i> Servicio Crítico</div>
+      <h2 class="section-title">Rescate Técnico y<br><em>Seguridad Operativa</em></h2>
+      <p class="section-desc">
+        Intervenimos sistemas institucionales que funcionan, pero representan riesgos técnicos, operativos o de seguridad. Dejamos control, documentación y estabilidad en <strong style="color:var(--c-accent);">30 días</strong>.
+      </p>
+      <div class="rescue-grid">
+        <div class="rescue-item"><i class="bi bi-search"></i>Diagnóstico técnico profundo</div>
+        <div class="rescue-item"><i class="bi bi-shield-exclamation"></i>Reducción inmediata de riesgos críticos</div>
+        <div class="rescue-item"><i class="bi bi-bug"></i>Corrección de errores en producción</div>
+        <div class="rescue-item"><i class="bi bi-clipboard-check"></i>Control operativo y trazabilidad</div>
+        <div class="rescue-item"><i class="bi bi-file-earmark-text"></i>Documentación técnica completa</div>
+        <div class="rescue-item"><i class="bi bi-arrow-repeat"></i>Continuidad del servicio garantizada</div>
+      </div>
+      <a href="#contact" class="btn-primary" style="display:inline-flex;"><i class="bi bi-calendar-check"></i>Solicitar evaluación técnica</a>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="container">
+    <div class="clients-header reveal">
+      <div class="section-label">Quienes confían en nosotros</div>
+      <h2 class="section-title">Nuestros <em>Clientes</em></h2>
+      <p class="section-desc">Desde pequeñas empresas emergentes hasta grandes corporaciones, cada cliente aporta un desafío único que nos permite demostrar nuestra capacidad.</p>
+    </div>
+  </div>
+  <div class="clients-track-wrap reveal">
+    <div class="clients-track" id="clientsTrack">
+      <div class="client-logo">Empresa A</div>
+      <div class="client-logo">TechCorp</div>
+      <div class="client-logo">DataPro</div>
+      <div class="client-logo">NetSolutions</div>
+      <div class="client-logo">InnovatePE</div>
+      <div class="client-logo">SysGroup</div>
+      <div class="client-logo">CloudBase</div>
+      <div class="client-logo">DigitalHub</div>
+      <!-- duplicated for infinite scroll -->
+      <div class="client-logo">Empresa A</div>
+      <div class="client-logo">TechCorp</div>
+      <div class="client-logo">DataPro</div>
+      <div class="client-logo">NetSolutions</div>
+      <div class="client-logo">InnovatePE</div>
+      <div class="client-logo">SysGroup</div>
+      <div class="client-logo">CloudBase</div>
+      <div class="client-logo">DigitalHub</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER STRIP -->
+<div class="newsletter-strip">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <h3>Únase a nuestro boletín</h3>
+        <p>Recibe las últimas novedades sobre tecnología, servicios y casos de éxito.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+        <input type="email" placeholder="tucorreo@empresa.com" required />
+        <button type="submit" class="btn-primary"><i class="bi bi-send"></i>Suscribirse</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info-col reveal">
+        <div class="section-label">Hablemos</div>
+        <h2 class="section-title">Inicia tu<br><em>proyecto hoy</em></h2>
+        <p class="section-desc">Cuéntanos tu desafío. Nuestro equipo te responderá en menos de 24 horas con una propuesta inicial.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="bi bi-envelope-fill"></i></div>
+          <div class="contact-detail-text">
+            <strong>Email</strong>
+            <a href="mailto:ventas@qsdsoft.com">ventas@qsdsoft.com</a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="bi bi-telephone-fill"></i></div>
+          <div class="contact-detail-text">
+            <strong>Teléfono / WhatsApp</strong>
+            <a href="tel:+51921459342">+51 921 459 342</a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon"><i class="bi bi-geo-alt-fill"></i></div>
+          <div class="contact-detail-text">
+            <strong>Dirección</strong>
+            <span>Av. Metropolitana 1753, Lima Ate, Lima</span>
+          </div>
+        </div>
+        <div class="contact-social">
+          <a href="#" class="social-btn" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="social-btn" title="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="social-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="https://wa.me/51921459342" class="social-btn" title="WhatsApp" style="background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.3);color:#25D366;"><i class="bi bi-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap reveal">
+        <div class="contact-form">
+          <form id="contactForm" onsubmit="handleContact(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="name" placeholder="Tu nombre" required />
+              </div>
+              <div class="form-group">
+                <label>Empresa</label>
+                <input type="text" name="company" placeholder="Nombre de empresa" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="correo@empresa.com" required />
+              </div>
+              <div class="form-group">
+                <label>Teléfono</label>
+                <input type="tel" name="phone" placeholder="+51 9xx xxx xxx" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Servicio de interés</label>
+              <select name="service">
+                <option value="">Selecciona un servicio...</option>
+                <option value="rescate">Rescate Técnico y Seguridad Operativa</option>
+                <option value="software">Desarrollo de Software</option>
+                <option value="datos">Analítica de Datos</option>
+                <option value="cloud">Infraestructura Cloud</option>
+                <option value="innovacion">Innovación Tecnológica</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Mensaje</label>
+              <textarea name="message" placeholder="Cuéntanos sobre tu proyecto o desafío..." required></textarea>
+            </div>
+            <button type="submit" class="form-submit">
+              <i class="bi bi-send-fill"></i>Enviar mensaje
+            </button>
+            <div class="form-status" id="formStatus"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark">Q</div>
+          <span class="logo-text">QSD<span>Soft</span></span>
+        </div>
+        <p>Soluciones tecnológicas de vanguardia que transforman ideas en realidades exitosas. Lima, Perú.</p>
+        <div class="footer-contact">
+          <p><strong>Av. Metropolitana 1753, Lima Ate</strong></p>
+          <p><strong>Phone:</strong> +51 921 459 342</p>
+          <p><strong>Email:</strong> ventas@qsdsoft.com</p>
+        </div>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="#"><i class="bi bi-chevron-right"></i>Inicio</a></li>
+          <li><a href="#about"><i class="bi bi-chevron-right"></i>Nosotros</a></li>
+          <li><a href="#services"><i class="bi bi-chevron-right"></i>Servicios</a></li>
+          <li><a href="#contact"><i class="bi bi-chevron-right"></i>Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#rescue"><i class="bi bi-chevron-right"></i>Rescate Técnico</a></li>
+          <li><a href="#services"><i class="bi bi-chevron-right"></i>Desarrollo Software</a></li>
+          <li><a href="#services"><i class="bi bi-chevron-right"></i>Analítica de Datos</a></li>
+          <li><a href="#services"><i class="bi bi-chevron-right"></i>Cloud & Infra</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Síguenos</h4>
+        <p style="font-size:0.85rem;color:var(--c-muted);margin-bottom:14px;">Mantente al día con nuestras novedades.</p>
+        <div class="contact-social">
+          <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> <strong>QSD Soft</strong>. Todos los derechos reservados.</p>
+      <p>Diseñado y desarrollado por <a href="https://qsdsoft.com">QSD Soft</a></p>
+    </div>
+  </div>
+</footer>
+
+<!-- SCROLL TOP -->
+<a href="#" id="scroll-top"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/51921459342" class="whatsapp-float" target="_blank" rel="noopener" title="Escríbenos por WhatsApp">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+<script>
+  // ─── YEAR
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ─── MOBILE NAV
+  document.getElementById('mobileToggle').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.add('open');
+  });
+  document.getElementById('mobileClose').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.remove('open');
+  });
+  function closeMobile() {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+
+  // ─── SCROLL TOP
+  const scrollTop = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => {
+    scrollTop.classList.toggle('visible', window.scrollY > 400);
+  });
+
+  // ─── COUNTER ANIMATION
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.querySelector('span')?.outerHTML || '';
+    const textOnly = el.innerHTML.replace(/<[^>]+>/g, '');
+    let current = 0;
+    const increment = Math.ceil(target / 60);
+    const timer = setInterval(() => {
+      current = Math.min(current + increment, target);
+      el.innerHTML = current.toLocaleString() + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 20);
+  }
+
+  // ─── INTERSECTION OBSERVER
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // trigger counters
+        entry.target.querySelectorAll && entry.target.querySelectorAll('[data-target]').forEach(animateCounter);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Observe stats
+  const heroStats = document.querySelector('.hero-stats');
+  if (heroStats) {
+    const statsObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('[data-target]').forEach(animateCounter);
+          statsObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    statsObs.observe(heroStats);
+  }
+
+  // ─── CONTACT FORM
+  function handleContact(e) {
+    e.preventDefault();
+    const status = document.getElementById('formStatus');
+    const btn = e.target.querySelector('.form-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i>Enviando...';
+    setTimeout(() => {
+      status.className = 'form-status success';
+      status.textContent = '¡Mensaje enviado! Te responderemos en menos de 24 horas.';
+      btn.disabled = false;
+      btn.innerHTML = '<i class="bi bi-send-fill"></i>Enviar mensaje';
+      e.target.reset();
+    }, 1200);
+  }
+
+  // ─── NEWSLETTER
+  function handleNewsletter(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.innerHTML = '<i class="bi bi-check-circle-fill"></i>¡Suscrito!';
+    btn.style.background = '#25D366';
+    setTimeout(() => {
+      btn.innerHTML = '<i class="bi bi-send"></i>Suscribirse';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+
+  // ─── ACTIVE NAV on scroll
+  const sections = document.querySelectorAll('section[id], div[id="contact"]');
+  const navLinks = document.querySelectorAll('nav ul li a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current || (current === '' && a.getAttribute('href') === '#'));
+    });
+  });
+</script>
+</body>
+</html>
