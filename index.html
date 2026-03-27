@@ -3,785 +3,474 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QSD Soft — Soluciones Tecnológicas</title>
-  <meta name="description" content="QSD Soft: soluciones tecnológicas de vanguardia. Rescate técnico, desarrollo de software y analítica de datos en Lima, Perú." />
+  <title>QSD Soft — Soluciones Tecnológicas · Lima, Perú</title>
+  <meta name="description" content="QSD Soft: Rescate Técnico, Ethical Hacking, Desarrollo de Software, Soluciones BI y Análisis de Datos. Lima, Perú." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --c-bg:       #04050a;
-      --c-surface:  #0b0d18;
-      --c-border:   rgba(255,255,255,0.07);
-      --c-accent:   #00e5ff;
-      --c-accent2:  #7b5ea7;
-      --c-text:     #e8eaf0;
-      --c-muted:    #8890a8;
-      --c-white:    #ffffff;
-      --radius:     12px;
-      --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
-      --font-head:  'Syne', sans-serif;
-      --font-body:  'DM Sans', sans-serif;
+      --c-bg:      #04050a;
+      --c-surface: #0b0d18;
+      --c-border:  rgba(255,255,255,0.07);
+      --c-accent:  #00e5ff;
+      --c-accent2: #7b5ea7;
+      --c-red:     #e8472a;
+      --c-text:    #e8eaf0;
+      --c-muted:   #8890a8;
+      --c-white:   #ffffff;
+      --radius:    12px;
+      --ease:      0.35s cubic-bezier(0.4,0,0.2,1);
+      --fh:        'Syne', sans-serif;
+      --fb:        'DM Sans', sans-serif;
     }
+    html { scroll-behavior: smooth; }
+    body { background: var(--c-bg); color: var(--c-text); font-family: var(--fb); font-weight: 300; line-height: 1.65; overflow-x: hidden; }
+    body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:9999; opacity:0.3; }
+    ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:var(--c-bg)} ::-webkit-scrollbar-thumb{background:var(--c-accent);border-radius:4px}
+    .container { max-width:1200px; margin:0 auto; padding:0 24px; }
 
-    html { scroll-behavior: smooth; font-size: 16px; }
+    /* TOPBAR */
+    .topbar { background:rgba(0,229,255,0.04); border-bottom:1px solid var(--c-border); padding:7px 0; font-size:0.78rem; color:var(--c-muted); }
+    .tb-inner { display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
+    .tb-left { display:flex; gap:18px; align-items:center; }
+    .tb-left i { margin-right:4px; color:var(--c-accent); }
+    .tb-left a { color:var(--c-muted); text-decoration:none; transition:color var(--ease); }
+    .tb-left a:hover { color:var(--c-accent); }
+    .tb-right { display:flex; align-items:center; gap:14px; }
+    .tb-search { display:flex; gap:5px; }
+    .tb-search input { background:rgba(255,255,255,0.06); border:1px solid var(--c-border); border-radius:6px; color:var(--c-text); padding:4px 10px; font-size:0.76rem; font-family:var(--fb); outline:none; width:160px; transition:border-color var(--ease); }
+    .tb-search input:focus { border-color:rgba(0,229,255,0.4); }
+    .tb-search button { background:none; border:1px solid var(--c-border); border-radius:6px; color:var(--c-muted); padding:4px 8px; cursor:pointer; transition:all var(--ease); }
+    .tb-search button:hover { color:var(--c-accent); border-color:rgba(0,229,255,0.4); }
+    .tb-socials { display:flex; gap:12px; }
+    .tb-socials a { color:var(--c-muted); text-decoration:none; font-size:0.9rem; transition:color var(--ease); }
+    .tb-socials a:hover { color:var(--c-accent); }
 
-    body {
-      background: var(--c-bg);
-      color: var(--c-text);
-      font-family: var(--font-body);
-      font-weight: 300;
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
+    /* HEADER */
+    header { position:sticky; top:0; z-index:1000; background:rgba(4,5,10,0.92); backdrop-filter:blur(20px); border-bottom:1px solid var(--c-border); }
+    .hdr-inner { display:flex; justify-content:space-between; align-items:center; padding:12px 0; }
+    .logo { display:flex; align-items:center; gap:8px; text-decoration:none; }
+    .logo img { height:32px; width:auto; display:block; transition:transform 0.3s ease; }
+    .logo:hover img { transform:scale(1.04); }
+    .logo-sep { width:1px; height:20px; background:rgba(255,255,255,0.18); }
+    .logo-word { font-family:var(--fh); font-weight:700; font-size:0.9rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase; }
+    nav ul { list-style:none; display:flex; gap:2px; align-items:center; }
+    nav a { text-decoration:none; color:var(--c-muted); font-size:0.85rem; font-weight:500; padding:7px 12px; border-radius:8px; transition:all var(--ease); display:block; }
+    nav a:hover, nav a.active { color:var(--c-white); background:rgba(0,229,255,0.08); }
+    .nav-cta { background:var(--c-accent)!important; color:#000!important; font-weight:700!important; }
+    .nav-cta:hover { background:#33ecff!important; }
+    .mob-tog { display:none; background:none; border:1px solid var(--c-border); color:var(--c-text); padding:7px 11px; border-radius:8px; cursor:pointer; font-size:1.05rem; }
 
-    /* ─── NOISE GRAIN OVERLAY ─── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 9999; opacity: 0.4;
-    }
+    /* MOBILE NAV */
+    .mob-nav { display:none; position:fixed; inset:0; z-index:2000; background:rgba(4,5,10,0.97); backdrop-filter:blur(20px); flex-direction:column; align-items:center; justify-content:center; gap:4px; }
+    .mob-nav.open { display:flex; }
+    .mob-nav a { color:var(--c-text); text-decoration:none; font-family:var(--fh); font-weight:700; font-size:1.7rem; padding:9px; transition:color var(--ease); }
+    .mob-nav a:hover { color:var(--c-accent); }
+    .mob-close { position:absolute; top:20px; right:20px; background:none; border:1px solid var(--c-border); color:var(--c-text); padding:7px 12px; border-radius:8px; cursor:pointer; font-size:1rem; }
 
-    /* ─── SCROLLBAR ─── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--c-bg); }
-    ::-webkit-scrollbar-thumb { background: var(--c-accent); border-radius: 4px; }
+    /* HERO */
+    #hero { height:calc(100vh - var(--hdr-h, 56px)); min-height:560px; display:grid; grid-template-columns:1fr 400px; grid-template-rows:1fr auto; position:relative; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; z-index:0; background:radial-gradient(ellipse 70% 60% at 15% 50%, rgba(0,229,255,0.06) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 85% 30%, rgba(123,94,167,0.07) 0%, transparent 60%), var(--c-bg); }
+    .hero-grid { position:absolute; inset:0; z-index:0; opacity:0.03; background-image:linear-gradient(var(--c-accent) 1px, transparent 1px), linear-gradient(90deg, var(--c-accent) 1px, transparent 1px); background-size:60px 60px; }
+    .hero-left { grid-column:1; grid-row:1; position:relative; z-index:1; overflow:hidden; display:flex; flex-direction:column; }
+    .carousel { position:relative; flex:1; min-height:0; }
+    .c-item { position:absolute; inset:0; opacity:0; transition:opacity 0.9s ease; display:flex; align-items:center; }
+    .c-item.active { opacity:1; z-index:2; }
+    .c-bg { position:absolute; inset:0; background-size:cover; background-position:center; }
+    .c-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg, rgba(4,5,10,0.80) 0%, rgba(4,5,10,0.25) 100%); }
+    .c-content { position:relative; z-index:1; padding:60px 48px; max-width:660px; }
+    .c-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 11px; border-radius:100px; border:1px solid rgba(0,229,255,0.3); background:rgba(0,229,255,0.06); font-size:0.7rem; font-weight:600; color:var(--c-accent); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:18px; }
+    .c-title { font-family:var(--fh); font-weight:800; font-size:clamp(1.9rem,3.5vw,3rem); line-height:1.08; letter-spacing:-0.03em; color:var(--c-white); margin-bottom:12px; }
+    .c-title em { font-style:normal; color:var(--c-accent); }
+    .c-sub { font-size:0.92rem; color:rgba(255,255,255,0.65); margin-bottom:10px; font-style:italic; }
+    .c-desc { font-size:0.88rem; color:var(--c-muted); margin-bottom:26px; line-height:1.75; max-width:500px; }
+    .c-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .c-prev,.c-next { position:absolute; top:50%; transform:translateY(-50%); z-index:10; width:38px; height:38px; border-radius:50%; background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.14); color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.9rem; transition:all var(--ease); backdrop-filter:blur(6px); }
+    .c-prev:hover,.c-next:hover { background:rgba(0,229,255,0.18); border-color:var(--c-accent); }
+    .c-prev { left:14px; } .c-next { right:14px; }
+    .c-dots { position:absolute; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:6px; z-index:10; }
+    .c-dots span { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.28); cursor:pointer; transition:all var(--ease); }
+    .c-dots span.active { width:18px; border-radius:3px; background:var(--c-accent); }
+    .hero-right { grid-column:2; grid-row:1; position:relative; z-index:1; border-left:1px solid var(--c-border); background:rgba(11,13,24,0.72); backdrop-filter:blur(12px); display:flex; align-items:center; padding:36px 28px; overflow-y:auto; }
+    .feat-card { width:100%; }
+    .feat-card::before { content:''; display:block; height:2px; background:linear-gradient(90deg, var(--c-red), var(--c-accent2)); border-radius:2px; margin-bottom:22px; }
+    .feat-badge { display:inline-flex; align-items:center; gap:5px; padding:3px 11px; border-radius:100px; background:rgba(232,71,42,0.1); border:1px solid rgba(232,71,42,0.25); font-size:0.67rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--c-red); margin-bottom:12px; }
+    .feat-card h3 { font-family:var(--fh); font-weight:800; font-size:1.18rem; color:var(--c-white); margin-bottom:10px; letter-spacing:-0.02em; line-height:1.25; }
+    .feat-card p { font-size:0.83rem; color:var(--c-muted); margin-bottom:16px; line-height:1.65; }
+    .feat-list { list-style:none; margin-bottom:18px; display:flex; flex-direction:column; gap:7px; }
+    .feat-list li { display:flex; align-items:center; gap:8px; font-size:0.8rem; color:var(--c-text); }
+    .feat-list li i { color:var(--c-red); font-size:0.85rem; flex-shrink:0; }
+    .feat-dl { display:inline-flex; align-items:center; gap:5px; font-size:0.78rem; color:var(--c-accent); text-decoration:none; margin-bottom:14px; transition:gap var(--ease); }
+    .feat-dl:hover { gap:8px; }
+    .hero-stats { grid-column:1/-1; display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--c-border); border-top:1px solid var(--c-border); position:relative; z-index:1; }
+    .stat-box { background:var(--c-bg); padding:22px 28px; transition:background var(--ease); }
+    .stat-box:hover { background:rgba(0,229,255,0.03); }
+    .stat-n { font-family:var(--fh); font-weight:800; font-size:1.9rem; color:var(--c-white); letter-spacing:-0.04em; }
+    .stat-n span { color:var(--c-accent); }
+    .stat-l { font-size:0.78rem; color:var(--c-muted); margin-top:3px; }
 
-    /* ─── TOPBAR ─── */
-    .topbar {
-      background: rgba(0,229,255,0.05);
-      border-bottom: 1px solid var(--c-border);
-      padding: 8px 0;
-      font-size: 0.8rem;
-      color: var(--c-muted);
-    }
-    .topbar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-    .topbar a { color: var(--c-muted); text-decoration: none; transition: color var(--transition); }
-    .topbar a:hover { color: var(--c-accent); }
-    .topbar .contact-info { display: flex; gap: 20px; align-items: center; }
-    .topbar .contact-info i { margin-right: 6px; color: var(--c-accent); }
-    .topbar .social-links { display: flex; gap: 14px; }
-    .topbar .social-links a { font-size: 1rem; }
+    /* SHARED */
+    section { padding:88px 0; }
+    .sec-label { display:inline-flex; align-items:center; gap:7px; font-size:0.68rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--c-accent); margin-bottom:10px; }
+    .sec-label::before,.sec-label::after { content:'—'; opacity:0.4; }
+    .sec-title { font-family:var(--fh); font-weight:800; font-size:clamp(1.85rem,3vw,2.7rem); letter-spacing:-0.03em; color:var(--c-white); margin-bottom:12px; line-height:1.1; }
+    .sec-title em { font-style:normal; color:var(--c-accent); }
+    .sec-desc { color:var(--c-muted); font-size:0.96rem; max-width:540px; }
 
-    /* ─── HEADER / NAV ─── */
-    header {
-      position: sticky; top: 0; z-index: 1000;
-      background: rgba(4,5,10,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--c-border);
-    }
-    .branding { padding: 16px 0; }
-    .branding .container { display: flex; justify-content: space-between; align-items: center; }
-    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-mark {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--c-accent), var(--c-accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-head); font-weight: 800; font-size: 1.1rem; color: #000;
-    }
-    .logo-text { font-family: var(--font-head); font-weight: 800; font-size: 1.4rem; color: var(--c-white); letter-spacing: -0.02em; }
-    .logo-text span { color: var(--c-accent); }
+    /* SERVICES */
+    #services { background:var(--c-surface); position:relative; overflow:hidden; }
+    #services::before { content:''; position:absolute; right:-200px; top:50%; transform:translateY(-50%); width:580px; height:580px; border-radius:50%; background:radial-gradient(circle, rgba(123,94,167,0.06) 0%, transparent 70%); pointer-events:none; }
+    .svc-hdr { margin-bottom:48px; }
+    .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .svc { background:var(--c-bg); border:1px solid var(--c-border); border-radius:var(--radius); padding:30px 24px; transition:all var(--ease); position:relative; overflow:hidden; }
+    .svc::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--c-accent), var(--c-accent2)); transform:scaleX(0); transform-origin:left; transition:transform var(--ease); }
+    .svc:hover { border-color:rgba(0,229,255,0.2); transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,0.3); }
+    .svc:hover::after { transform:scaleX(1); }
+    .svc-ico { width:48px; height:48px; border-radius:11px; background:rgba(0,229,255,0.07); border:1px solid rgba(0,229,255,0.13); display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:var(--c-accent); margin-bottom:18px; transition:all var(--ease); }
+    .svc:hover .svc-ico { background:rgba(0,229,255,0.13); transform:scale(1.06); }
+    .svc h3 { font-family:var(--fh); font-weight:700; font-size:1.06rem; color:var(--c-white); margin-bottom:9px; }
+    .svc p { font-size:0.84rem; color:var(--c-muted); line-height:1.7; }
+    .svc-lnk { display:inline-flex; align-items:center; gap:5px; font-size:0.78rem; font-weight:600; color:var(--c-accent); text-decoration:none; margin-top:16px; transition:gap var(--ease); }
+    .svc:hover .svc-lnk { gap:9px; }
+    .svc.hi { border-color:rgba(0,229,255,0.14); background:linear-gradient(135deg, rgba(0,229,255,0.04), var(--c-bg)); }
 
-    nav ul { list-style: none; display: flex; gap: 6px; align-items: center; }
-    nav ul li a {
-      text-decoration: none; color: var(--c-muted);
-      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.02em;
-      padding: 8px 14px; border-radius: 8px; transition: all var(--transition);
-    }
-    nav ul li a:hover, nav ul li a.active { color: var(--c-white); background: rgba(0,229,255,0.08); }
-    .nav-cta {
-      background: var(--c-accent) !important; color: #000 !important;
-      font-weight: 700 !important; letter-spacing: 0.03em;
-    }
-    .nav-cta:hover { background: #33ecff !important; transform: translateY(-1px); }
+    /* ABOUT */
+    #about { background:var(--c-bg); }
+    .about-g { display:grid; grid-template-columns:1fr 1fr; gap:68px; align-items:center; }
+    .about-img { position:relative; border-radius:18px; overflow:hidden; aspect-ratio:4/3; border:1px solid var(--c-border); }
+    .about-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .about-bdg { position:absolute; bottom:-14px; right:-14px; background:var(--c-accent); color:#000; border-radius:12px; padding:13px 17px; font-family:var(--fh); font-weight:800; box-shadow:0 6px 20px rgba(0,229,255,0.28); }
+    .about-bdg .n { font-size:1.6rem; line-height:1; display:block; }
+    .about-bdg .l { font-size:0.65rem; letter-spacing:0.06em; text-transform:uppercase; }
+    .about-desc { font-style:italic; color:var(--c-muted); margin-bottom:24px; font-size:0.93rem; line-height:1.75; }
+    .chk-list { list-style:none; display:flex; flex-direction:column; gap:13px; margin-bottom:28px; }
+    .chk-list li { display:flex; gap:11px; align-items:flex-start; }
+    .chk-ico { width:25px; height:25px; border-radius:7px; background:rgba(0,229,255,0.09); border:1px solid rgba(0,229,255,0.2); display:flex; align-items:center; justify-content:center; color:var(--c-accent); font-size:0.78rem; flex-shrink:0; margin-top:2px; }
+    .chk-list strong { display:block; color:var(--c-text); font-weight:500; font-size:0.88rem; margin-bottom:1px; }
+    .chk-list p { font-size:0.83rem; color:var(--c-muted); }
 
-    .mobile-toggle { display: none; background: none; border: 1px solid var(--c-border); color: var(--c-text); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; }
+    /* BI */
+    #bi { background:var(--c-surface); }
+    .bi-g { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+    .bi-img { border-radius:14px; overflow:hidden; border:1px solid var(--c-border); box-shadow:0 0 40px rgba(0,229,255,0.05); }
+    .bi-img-ph { aspect-ratio:16/9; background:linear-gradient(135deg,#0d1428,#071020); display:flex; align-items:center; justify-content:center; }
+    .bi-img-ph i { font-size:4rem; color:var(--c-accent); opacity:0.18; }
+    .bi-list { list-style:none; display:flex; flex-direction:column; gap:10px; margin:18px 0 20px; }
+    .bi-list li { display:flex; align-items:center; gap:9px; font-size:0.86rem; color:var(--c-text); }
+    .bi-list li i { color:var(--c-accent); font-size:0.95rem; }
+    .bi-cta { font-size:0.87rem; color:var(--c-muted); margin-bottom:22px; line-height:1.7; }
 
-    /* ─── HERO ─── */
-    #hero {
-      min-height: 100vh;
-      display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center; gap: 0;
-      position: relative; overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 20% 50%, rgba(0,229,255,0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 50% at 80% 30%, rgba(123,94,167,0.1) 0%, transparent 60%),
-        var(--c-bg);
-    }
-    .hero-grid-lines {
-      position: absolute; inset: 0; z-index: 0; opacity: 0.04;
-      background-image:
-        linear-gradient(var(--c-accent) 1px, transparent 1px),
-        linear-gradient(90deg, var(--c-accent) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
+    /* RESCUE */
+    #rescue { background:var(--c-bg); }
+    .rescue-box { max-width:860px; margin:0 auto; background:var(--c-surface); border:1px solid var(--c-border); border-radius:22px; padding:52px; text-align:center; position:relative; overflow:hidden; }
+    .rescue-box::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, transparent, var(--c-red), var(--c-accent), transparent); }
+    .rescue-box .sec-label { justify-content:center; }
+    .rescue-box .sec-desc { margin:0 auto 32px; text-align:center; }
+    .rg { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:32px; text-align:left; }
+    .ri { background:rgba(0,229,255,0.04); border:1px solid rgba(0,229,255,0.1); border-radius:9px; padding:14px 16px; display:flex; align-items:center; gap:10px; font-size:0.84rem; color:var(--c-text); transition:all var(--ease); }
+    .ri:hover { background:rgba(0,229,255,0.08); border-color:rgba(0,229,255,0.2); }
+    .ri i { color:var(--c-accent); font-size:1rem; flex-shrink:0; }
 
-    .hero-left {
-      position: relative; z-index: 1;
-      padding: 80px 60px 80px 0;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 14px; border-radius: 100px;
-      border: 1px solid rgba(0,229,255,0.3);
-      background: rgba(0,229,255,0.05);
-      font-size: 0.75rem; font-weight: 500; color: var(--c-accent);
-      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 28px;
-      animation: fadeInDown 0.6s ease both;
-    }
-    .hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--c-accent); animation: pulse 2s infinite; }
+    /* CLIENTS */
+    #clients { background:var(--c-surface); padding:72px 0; overflow:hidden; }
+    .cl-hdr { text-align:center; margin-bottom:40px; }
+    .cl-hdr .sec-label { justify-content:center; }
+    .cl-hdr .sec-desc { margin:0 auto; text-align:center; max-width:500px; }
+    .cl-wrap { overflow:hidden; position:relative; }
+    .cl-wrap::before,.cl-wrap::after { content:''; position:absolute; top:0; bottom:0; width:90px; z-index:2; pointer-events:none; }
+    .cl-wrap::before { left:0; background:linear-gradient(90deg, var(--c-surface), transparent); }
+    .cl-wrap::after  { right:0; background:linear-gradient(-90deg, var(--c-surface), transparent); }
+    .cl-track { display:flex; gap:36px; animation:marquee 26s linear infinite; width:max-content; padding:10px 0; }
+    .cl-track:hover { animation-play-state:paused; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .cl-logo { display:flex; align-items:center; justify-content:center; min-width:115px; height:46px; background:rgba(255,255,255,0.04); border:1px solid var(--c-border); border-radius:8px; padding:9px 16px; font-family:var(--fh); font-weight:700; font-size:0.8rem; color:var(--c-muted); letter-spacing:0.05em; text-transform:uppercase; white-space:nowrap; transition:all var(--ease); }
+    .cl-logo:hover { color:var(--c-white); border-color:rgba(0,229,255,0.3); }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
-    }
+    /* NEWSLETTER */
+    .nl-strip { background:linear-gradient(135deg,rgba(0,229,255,0.07),rgba(123,94,167,0.07)); border-top:1px solid var(--c-border); border-bottom:1px solid var(--c-border); padding:52px 0; }
+    .nl-in { display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap; }
+    .nl-txt h3 { font-family:var(--fh); font-weight:700; font-size:1.25rem; color:var(--c-white); margin-bottom:4px; }
+    .nl-txt p { color:var(--c-muted); font-size:0.86rem; }
+    .nl-form { display:flex; gap:8px; }
+    .nl-form input { padding:10px 15px; background:rgba(255,255,255,0.06); border:1px solid var(--c-border); border-radius:8px; color:var(--c-text); font-family:var(--fb); font-size:0.87rem; outline:none; min-width:230px; transition:border-color var(--ease); }
+    .nl-form input:focus { border-color:var(--c-accent); }
 
-    .hero-title {
-      font-family: var(--font-head);
-      font-weight: 800; font-size: clamp(2.6rem, 4.5vw, 4.2rem);
-      line-height: 1.08; letter-spacing: -0.03em;
-      color: var(--c-white); margin-bottom: 24px;
-      animation: fadeInDown 0.7s 0.1s ease both;
-    }
-    .hero-title em { font-style: normal; color: var(--c-accent); }
-    .hero-title .line2 { display: block; color: var(--c-muted); font-size: 0.7em; font-weight: 600; }
+    /* CONTACT */
+    #contact { background:var(--c-bg); }
+    .ct-g { display:grid; grid-template-columns:1fr 1.4fr; gap:52px; align-items:start; }
+    .ct-d { display:flex; gap:13px; align-items:flex-start; margin-bottom:18px; }
+    .ct-ico { width:40px; height:40px; border-radius:9px; background:rgba(0,229,255,0.08); border:1px solid rgba(0,229,255,0.15); display:flex; align-items:center; justify-content:center; color:var(--c-accent); font-size:1rem; flex-shrink:0; }
+    .ct-txt strong { display:block; color:var(--c-text); font-weight:500; font-size:0.86rem; margin-bottom:1px; }
+    .ct-txt a,.ct-txt span { color:var(--c-muted); text-decoration:none; font-size:0.83rem; }
+    .ct-txt a:hover { color:var(--c-accent); }
+    .ct-soc { display:flex; gap:8px; margin-top:24px; }
+    .soc-btn { width:36px; height:36px; border-radius:8px; background:rgba(255,255,255,0.05); border:1px solid var(--c-border); display:flex; align-items:center; justify-content:center; color:var(--c-muted); text-decoration:none; font-size:0.9rem; transition:all var(--ease); }
+    .soc-btn:hover { background:rgba(0,229,255,0.1); color:var(--c-accent); border-color:rgba(0,229,255,0.3); }
+    .soc-btn.wa { background:rgba(37,211,102,0.08); border-color:rgba(37,211,102,0.2); color:#25D366; }
+    .soc-btn.wa:hover { background:rgba(37,211,102,0.18); }
+    .ct-form { background:var(--c-surface); border:1px solid var(--c-border); border-radius:16px; padding:32px; }
+    .fg { margin-bottom:16px; }
+    .fg label { display:block; font-size:0.74rem; font-weight:500; color:var(--c-muted); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:6px; }
+    .fg input,.fg textarea,.fg select { width:100%; padding:10px 13px; background:rgba(255,255,255,0.04); border:1px solid var(--c-border); border-radius:8px; color:var(--c-text); font-family:var(--fb); font-size:0.88rem; transition:all var(--ease); outline:none; }
+    .fg input:focus,.fg textarea:focus,.fg select:focus { border-color:var(--c-accent); background:rgba(0,229,255,0.03); }
+    .fg textarea { resize:vertical; min-height:105px; }
+    .fg select option { background:var(--c-surface); }
+    .fg-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .f-sub { width:100%; padding:13px; background:var(--c-accent); color:#000; font-family:var(--fh); font-weight:700; font-size:0.9rem; border:none; border-radius:9px; cursor:pointer; transition:all var(--ease); display:flex; align-items:center; justify-content:center; gap:7px; }
+    .f-sub:hover { background:#33ecff; transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,229,255,0.3); }
+    .f-st { display:none; padding:10px 13px; border-radius:7px; font-size:0.84rem; margin-top:12px; }
+    .f-st.ok { background:rgba(0,229,255,0.1); border:1px solid rgba(0,229,255,0.3); color:var(--c-accent); display:block; }
 
-    .hero-desc {
-      font-size: 1.05rem; color: var(--c-muted); max-width: 520px;
-      margin-bottom: 40px; animation: fadeInDown 0.7s 0.2s ease both;
-    }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeInDown 0.7s 0.3s ease both; }
+    /* FOOTER */
+    footer { background:var(--c-surface); padding:52px 0 26px; }
+    .ft-g { display:grid; grid-template-columns:2fr 1fr 1fr 1.4fr; gap:40px; margin-bottom:40px; }
+    .ft-brand p { color:var(--c-muted); font-size:0.84rem; margin:12px 0 16px; max-width:260px; }
+    .ft-c p { font-size:0.81rem; color:var(--c-muted); margin-bottom:2px; }
+    .ft-c strong { color:var(--c-text); }
+    footer h4 { font-family:var(--fh); font-weight:700; font-size:0.8rem; letter-spacing:0.07em; text-transform:uppercase; color:var(--c-muted); margin-bottom:14px; }
+    footer ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    footer ul a { text-decoration:none; color:var(--c-muted); font-size:0.84rem; display:flex; align-items:center; gap:6px; transition:color var(--ease); }
+    footer ul a:hover { color:var(--c-accent); }
+    footer ul a i { font-size:0.62rem; opacity:0.6; }
+    .ft-bot { border-top:1px solid var(--c-border); padding-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+    .ft-bot p { font-size:0.78rem; color:var(--c-muted); }
+    .ft-bot a { color:var(--c-accent); text-decoration:none; }
 
-    .btn-primary {
-      padding: 14px 28px; border-radius: 10px;
-      background: var(--c-accent); color: #000;
-      font-family: var(--font-head); font-weight: 700; font-size: 0.9rem;
-      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-      transition: all var(--transition); border: none; cursor: pointer;
-      letter-spacing: 0.02em;
-    }
-    .btn-primary:hover { background: #33ecff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.3); }
+    /* BUTTONS */
+    .btn-p { padding:12px 24px; border-radius:9px; background:var(--c-accent); color:#000; font-family:var(--fh); font-weight:700; font-size:0.86rem; text-decoration:none; display:inline-flex; align-items:center; gap:7px; transition:all var(--ease); border:none; cursor:pointer; }
+    .btn-p:hover { background:#33ecff; transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,229,255,0.3); }
+    .btn-s { padding:12px 24px; border-radius:9px; background:transparent; color:var(--c-text); font-family:var(--fh); font-weight:600; font-size:0.86rem; text-decoration:none; display:inline-flex; align-items:center; gap:7px; transition:all var(--ease); border:1px solid var(--c-border); }
+    .btn-s:hover { border-color:rgba(0,229,255,0.4); color:var(--c-white); background:rgba(0,229,255,0.05); }
+    .btn-red { background:var(--c-red)!important; color:#fff!important; }
+    .btn-red:hover { background:#f05535!important; box-shadow:0 8px 24px rgba(232,71,42,0.3)!important; }
 
-    .btn-secondary {
-      padding: 14px 28px; border-radius: 10px;
-      background: transparent; color: var(--c-text);
-      font-family: var(--font-head); font-weight: 600; font-size: 0.9rem;
-      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-      transition: all var(--transition); border: 1px solid var(--c-border);
-      letter-spacing: 0.02em;
-    }
-    .btn-secondary:hover { border-color: rgba(0,229,255,0.4); color: var(--c-white); background: rgba(0,229,255,0.05); }
+    /* FLOATS */
+    #stb { position:fixed; bottom:24px; right:24px; z-index:999; width:40px; height:40px; border-radius:9px; background:var(--c-accent); color:#000; display:flex; align-items:center; justify-content:center; font-size:1.1rem; text-decoration:none; opacity:0; pointer-events:none; transition:all var(--ease); box-shadow:0 4px 14px rgba(0,229,255,0.3); }
+    #stb.on { opacity:1; pointer-events:all; }
+    #stb:hover { background:#33ecff; transform:translateY(-2px); }
+    .wa-fab { position:fixed; bottom:72px; right:24px; z-index:999; width:44px; height:44px; border-radius:11px; background:#25D366; color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.3rem; text-decoration:none; box-shadow:0 4px 18px rgba(37,211,102,0.4); transition:all var(--ease); }
+    .wa-fab:hover { background:#1ebe5d; transform:translateY(-2px); }
 
-    .hero-right {
-      position: relative; z-index: 1;
-      padding: 80px 0 80px 60px;
-      display: flex; justify-content: center; align-items: center;
-    }
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.on { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
 
-    /* ─── FEATURED SERVICE CARD ─── */
-    .featured-card {
-      background: var(--c-surface);
-      border: 1px solid var(--c-border);
-      border-radius: 20px; padding: 36px;
-      max-width: 420px; width: 100%;
-      position: relative; overflow: hidden;
-      animation: fadeInRight 0.8s 0.4s ease both;
+    /* RESPONSIVE */
+    @media(max-width:1100px){ #hero{grid-template-columns:1fr 340px;} }
+    @media(max-width:900px){
+      #hero{grid-template-columns:1fr;height:auto;min-height:auto;}
+      .hero-left{min-height:520px;}
+      .hero-right{display:none;}
+      .svc-grid{grid-template-columns:repeat(2,1fr);}
+      .about-g,.bi-g,.ct-g{grid-template-columns:1fr;}
+      .about-img{order:-1;}
+      .ft-g{grid-template-columns:1fr 1fr;}
+      .hero-stats{grid-template-columns:repeat(2,1fr);}
     }
-    .featured-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+    @media(max-width:640px){
+      nav ul{display:none;} .mob-tog{display:block;}
+      .svc-grid{grid-template-columns:1fr;}
+      .hero-stats{grid-template-columns:1fr 1fr;}
+      .rg{grid-template-columns:1fr;}
+      .fg-row{grid-template-columns:1fr;}
+      .nl-in{flex-direction:column;}
+      .nl-form{width:100%;flex-direction:column;}
+      .nl-form input{min-width:0;}
+      .ft-g{grid-template-columns:1fr;gap:24px;}
+      .tb-search{display:none;}
     }
-    .badge-featured {
-      display: inline-block; padding: 4px 12px; border-radius: 100px;
-      background: rgba(0,229,255,0.1); color: var(--c-accent);
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; margin-bottom: 16px;
-    }
-    .featured-card h3 {
-      font-family: var(--font-head); font-weight: 700; font-size: 1.35rem;
-      color: var(--c-white); margin-bottom: 14px; letter-spacing: -0.02em;
-    }
-    .featured-card p { font-size: 0.88rem; color: var(--c-muted); margin-bottom: 18px; }
-    .featured-list { list-style: none; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; }
-    .featured-list li {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 0.85rem; color: var(--c-text);
-    }
-    .featured-list li::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--c-accent); flex-shrink: 0;
-    }
-    .featured-card .btn-primary { width: 100%; justify-content: center; }
-
-    /* ─── HERO STATS ─── */
-    .hero-stats {
-      position: relative; z-index: 1;
-      grid-column: 1 / -1;
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; background: var(--c-border);
-      border-top: 1px solid var(--c-border);
-      animation: fadeInUp 0.8s 0.5s ease both;
-    }
-    .stat-item {
-      background: var(--c-bg); padding: 28px 32px;
-      transition: background var(--transition);
-    }
-    .stat-item:hover { background: rgba(0,229,255,0.03); }
-    .stat-num {
-      font-family: var(--font-head); font-weight: 800; font-size: 2.2rem;
-      color: var(--c-white); letter-spacing: -0.04em;
-    }
-    .stat-num span { color: var(--c-accent); }
-    .stat-label { font-size: 0.82rem; color: var(--c-muted); margin-top: 4px; }
-
-    /* ─── SECTIONS SHARED ─── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    section { padding: 100px 0; }
-
-    .section-label {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--c-accent); margin-bottom: 16px;
-    }
-    .section-label::before, .section-label::after { content: '—'; opacity: 0.5; }
-
-    .section-title {
-      font-family: var(--font-head); font-weight: 800;
-      font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.03em;
-      color: var(--c-white); margin-bottom: 18px; line-height: 1.1;
-    }
-    .section-title em { font-style: normal; color: var(--c-accent); }
-    .section-desc { color: var(--c-muted); font-size: 1.02rem; max-width: 580px; }
-
-    /* ─── SERVICES ─── */
-    #services { background: var(--c-surface); position: relative; overflow: hidden; }
-    #services::before {
-      content: '';
-      position: absolute; right: -200px; top: 50%; transform: translateY(-50%);
-      width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(123,94,167,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .services-header { margin-bottom: 60px; }
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-
-    .service-card {
-      background: var(--c-bg); border: 1px solid var(--c-border);
-      border-radius: var(--radius); padding: 36px 30px;
-      transition: all var(--transition); position: relative; overflow: hidden;
-      cursor: pointer;
-    }
-    .service-card::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
-      transform: scaleX(0); transform-origin: left; transition: transform var(--transition);
-    }
-    .service-card:hover { border-color: rgba(0,229,255,0.2); transform: translateY(-4px); }
-    .service-card:hover::after { transform: scaleX(1); }
-
-    .service-icon {
-      width: 56px; height: 56px; border-radius: 14px;
-      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; color: var(--c-accent); margin-bottom: 24px;
-      transition: all var(--transition);
-    }
-    .service-card:hover .service-icon {
-      background: rgba(0,229,255,0.15); transform: scale(1.05);
-    }
-    .service-card h3 {
-      font-family: var(--font-head); font-weight: 700; font-size: 1.15rem;
-      color: var(--c-white); margin-bottom: 12px; letter-spacing: -0.01em;
-    }
-    .service-card p { font-size: 0.88rem; color: var(--c-muted); line-height: 1.7; }
-    .service-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.82rem; font-weight: 600; color: var(--c-accent);
-      text-decoration: none; margin-top: 20px; letter-spacing: 0.02em;
-      transition: gap var(--transition);
-    }
-    .service-card:hover .service-link { gap: 10px; }
-
-    /* ─── ABOUT ─── */
-    #about { background: var(--c-bg); position: relative; overflow: hidden; }
-    #about::before {
-      content: '';
-      position: absolute; left: -300px; bottom: 0;
-      width: 700px; height: 700px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .about-visual { position: relative; }
-    .about-img-frame {
-      border-radius: 20px; overflow: hidden; position: relative;
-      aspect-ratio: 4/3;
-      background: linear-gradient(135deg, var(--c-surface) 0%, rgba(0,229,255,0.05) 100%);
-      border: 1px solid var(--c-border);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .about-img-placeholder {
-      font-size: 5rem; opacity: 0.15; color: var(--c-accent);
-    }
-    .about-badge-float {
-      position: absolute; bottom: -20px; right: -20px;
-      background: var(--c-accent); color: #000;
-      border-radius: 16px; padding: 16px 20px;
-      font-family: var(--font-head); font-weight: 800;
-    }
-    .about-badge-float .num { font-size: 1.8rem; line-height: 1; display: block; }
-    .about-badge-float .lbl { font-size: 0.72rem; letter-spacing: 0.06em; }
-
-    .about-content .section-label { margin-bottom: 8px; }
-    .about-content .section-title { margin-bottom: 24px; }
-    .about-desc { color: var(--c-muted); margin-bottom: 32px; font-style: italic; font-size: 0.98rem; }
-    .about-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
-    .about-list li {
-      display: flex; gap: 14px; align-items: flex-start;
-    }
-    .about-list .icon-check {
-      width: 28px; height: 28px; border-radius: 8px;
-      background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.2);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--c-accent); font-size: 0.85rem; flex-shrink: 0; margin-top: 2px;
-    }
-    .about-list li p { font-size: 0.9rem; color: var(--c-muted); }
-    .about-list li strong { display: block; color: var(--c-text); font-weight: 500; margin-bottom: 2px; }
-
-    /* ─── RESCUE SECTION ─── */
-    #rescue {
-      background: linear-gradient(135deg, #060812 0%, #0c0e1c 100%);
-      position: relative; overflow: hidden;
-    }
-    #rescue::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0,229,255,0.05) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .rescue-inner {
-      max-width: 900px; margin: 0 auto;
-      background: var(--c-surface); border: 1px solid var(--c-border);
-      border-radius: 24px; padding: 60px;
-      position: relative; overflow: hidden;
-      text-align: center;
-    }
-    .rescue-inner::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, transparent, var(--c-accent), var(--c-accent2), transparent);
-    }
-    .rescue-inner .section-label { justify-content: center; }
-    .rescue-inner .section-title { max-width: 100%; }
-    .rescue-inner .section-desc { margin: 0 auto 40px; text-align: center; }
-
-    .rescue-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 40px; text-align: left; }
-    .rescue-item {
-      background: rgba(0,229,255,0.04); border: 1px solid rgba(0,229,255,0.1);
-      border-radius: 10px; padding: 18px 20px;
-      display: flex; align-items: center; gap: 12px;
-      font-size: 0.88rem; color: var(--c-text);
-      transition: all var(--transition);
-    }
-    .rescue-item:hover { background: rgba(0,229,255,0.08); border-color: rgba(0,229,255,0.2); }
-    .rescue-item i { color: var(--c-accent); font-size: 1.1rem; flex-shrink: 0; }
-
-    /* ─── CLIENTS ─── */
-    #clients { background: var(--c-surface); overflow: hidden; }
-    .clients-header { text-align: center; margin-bottom: 50px; }
-    .clients-header .section-label { justify-content: center; }
-    .clients-header .section-desc { margin: 0 auto; text-align: center; }
-
-    .clients-track-wrap { overflow: hidden; position: relative; }
-    .clients-track-wrap::before,
-    .clients-track-wrap::after {
-      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
-      pointer-events: none;
-    }
-    .clients-track-wrap::before { left: 0; background: linear-gradient(90deg, var(--c-surface), transparent); }
-    .clients-track-wrap::after { right: 0; background: linear-gradient(-90deg, var(--c-surface), transparent); }
-
-    .clients-track {
-      display: flex; gap: 48px; animation: scroll 30s linear infinite;
-      width: max-content;
-    }
-    .clients-track:hover { animation-play-state: paused; }
-    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    .client-logo {
-      display: flex; align-items: center; justify-content: center;
-      min-width: 130px; height: 54px;
-      background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
-      border-radius: 10px; padding: 12px 20px;
-      font-family: var(--font-head); font-weight: 700; font-size: 0.85rem;
-      color: var(--c-muted); letter-spacing: 0.05em; text-transform: uppercase;
-      transition: all var(--transition);
-    }
-    .client-logo:hover { color: var(--c-white); border-color: rgba(0,229,255,0.3); }
-
-    /* ─── CONTACT ─── */
-    #contact { background: var(--c-bg); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
-    .contact-info-col .section-title { font-size: clamp(1.8rem,2.5vw,2.4rem); }
-    .contact-info-col .section-desc { margin-bottom: 36px; }
-
-    .contact-detail {
-      display: flex; gap: 16px; align-items: flex-start;
-      margin-bottom: 24px;
-    }
-    .contact-detail-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--c-accent); font-size: 1.1rem; flex-shrink: 0;
-    }
-    .contact-detail-text strong { display: block; color: var(--c-text); font-weight: 500; margin-bottom: 2px; }
-    .contact-detail-text a, .contact-detail-text span { color: var(--c-muted); text-decoration: none; font-size: 0.9rem; }
-    .contact-detail-text a:hover { color: var(--c-accent); }
-
-    .contact-social { display: flex; gap: 10px; margin-top: 32px; }
-    .social-btn {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: rgba(255,255,255,0.05); border: 1px solid var(--c-border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--c-muted); text-decoration: none; font-size: 1rem;
-      transition: all var(--transition);
-    }
-    .social-btn:hover { background: rgba(0,229,255,0.1); color: var(--c-accent); border-color: rgba(0,229,255,0.3); }
-
-    /* ─── FORM ─── */
-    .contact-form {
-      background: var(--c-surface); border: 1px solid var(--c-border);
-      border-radius: 20px; padding: 40px;
-    }
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block; font-size: 0.8rem; font-weight: 500; color: var(--c-muted);
-      letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;
-    }
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%; padding: 12px 16px;
-      background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
-      border-radius: 8px; color: var(--c-text);
-      font-family: var(--font-body); font-size: 0.92rem;
-      transition: all var(--transition); outline: none;
-    }
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--c-accent); background: rgba(0,229,255,0.03);
-    }
-    .form-group textarea { resize: vertical; min-height: 120px; }
-    .form-group select option { background: var(--c-surface); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-submit {
-      width: 100%; padding: 15px;
-      background: var(--c-accent); color: #000;
-      font-family: var(--font-head); font-weight: 700; font-size: 0.95rem;
-      border: none; border-radius: 10px; cursor: pointer; letter-spacing: 0.02em;
-      transition: all var(--transition); display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
-    .form-submit:hover { background: #33ecff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.3); }
-
-    .form-status { display: none; padding: 12px 16px; border-radius: 8px; font-size: 0.88rem; margin-top: 16px; }
-    .form-status.success { background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); color: var(--c-accent); display: block; }
-    .form-status.error { background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.3); color: #ff5050; display: block; }
-
-    /* ─── NEWSLETTER ─── */
-    .newsletter-strip {
-      background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(123,94,167,0.08));
-      border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);
-      padding: 60px 0;
-    }
-    .newsletter-inner { display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
-    .newsletter-text h3 { font-family: var(--font-head); font-weight: 700; font-size: 1.4rem; color: var(--c-white); margin-bottom: 6px; }
-    .newsletter-text p { color: var(--c-muted); font-size: 0.9rem; }
-    .newsletter-form { display: flex; gap: 10px; }
-    .newsletter-form input {
-      padding: 12px 18px; background: rgba(255,255,255,0.06);
-      border: 1px solid var(--c-border); border-radius: 8px;
-      color: var(--c-text); font-family: var(--font-body); font-size: 0.9rem;
-      outline: none; min-width: 260px; transition: border-color var(--transition);
-    }
-    .newsletter-form input:focus { border-color: var(--c-accent); }
-    .newsletter-form button { white-space: nowrap; }
-
-    /* ─── FOOTER ─── */
-    footer { background: var(--c-surface); padding: 60px 0 30px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 48px; margin-bottom: 48px; }
-    .footer-brand p { color: var(--c-muted); font-size: 0.88rem; margin: 16px 0 20px; max-width: 280px; }
-    .footer-contact p { font-size: 0.85rem; color: var(--c-muted); margin-bottom: 4px; }
-    .footer-contact strong { color: var(--c-text); }
-
-    footer h4 { font-family: var(--font-head); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 18px; }
-    footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    footer ul a { text-decoration: none; color: var(--c-muted); font-size: 0.88rem; display: flex; align-items: center; gap: 8px; transition: color var(--transition); }
-    footer ul a:hover { color: var(--c-accent); }
-    footer ul a i { font-size: 0.7rem; opacity: 0.6; }
-
-    .footer-bottom { border-top: 1px solid var(--c-border); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .footer-bottom p { font-size: 0.82rem; color: var(--c-muted); }
-    .footer-bottom a { color: var(--c-accent); text-decoration: none; }
-
-    /* ─── SCROLL TOP ─── */
-    #scroll-top {
-      position: fixed; bottom: 28px; right: 28px; z-index: 999;
-      width: 44px; height: 44px; border-radius: 10px;
-      background: var(--c-accent); color: #000;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; text-decoration: none;
-      opacity: 0; pointer-events: none; transition: all var(--transition);
-      box-shadow: 0 4px 16px rgba(0,229,255,0.3);
-    }
-    #scroll-top.visible { opacity: 1; pointer-events: all; }
-    #scroll-top:hover { background: #33ecff; transform: translateY(-3px); }
-
-    /* ─── WHATSAPP BTN ─── */
-    .whatsapp-float {
-      position: fixed; bottom: 80px; right: 28px; z-index: 999;
-      width: 48px; height: 48px; border-radius: 12px;
-      background: #25D366; color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; text-decoration: none;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-      transition: all var(--transition);
-    }
-    .whatsapp-float:hover { background: #1ebe5d; transform: translateY(-3px); }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInUp   { from { opacity: 0; transform: translateY(20px);  } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInRight{ from { opacity: 0; transform: translateX(30px);  } to { opacity: 1; transform: translateX(0); } }
-
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-
-    /* ─── MOBILE NAV ─── */
-    .mobile-nav {
-      display: none; position: fixed; inset: 0; z-index: 2000;
-      background: rgba(4,5,10,0.98); backdrop-filter: blur(20px);
-      flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-      padding: 24px;
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      color: var(--c-text); text-decoration: none; font-family: var(--font-head);
-      font-weight: 700; font-size: 2rem; letter-spacing: -0.02em;
-      transition: color var(--transition); padding: 8px;
-    }
-    .mobile-nav a:hover { color: var(--c-accent); }
-    .mobile-nav-close {
-      position: absolute; top: 24px; right: 24px;
-      background: none; border: 1px solid var(--c-border); color: var(--c-text);
-      padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 1.1rem;
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 1024px) {
-      #hero { grid-template-columns: 1fr; }
-      .hero-left { padding: 80px 0 40px; }
-      .hero-right { padding: 0 0 60px; display: none; }
-      .hero-stats { grid-template-columns: repeat(2, 1fr); }
-      .services-grid { grid-template-columns: repeat(2, 1fr); }
-      .about-grid { grid-template-columns: 1fr; gap: 40px; }
-      .about-visual { order: -1; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 768px) {
-      nav ul { display: none; }
-      .mobile-toggle { display: block; }
-      .services-grid { grid-template-columns: 1fr; }
-      .hero-stats { grid-template-columns: 1fr 1fr; }
-      .rescue-grid { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .newsletter-inner { flex-direction: column; }
-      .newsletter-form { width: 100%; flex-direction: column; }
-      .newsletter-form input { min-width: 0; }
-      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
-      .topbar .contact-info { flex-wrap: wrap; gap: 8px; }
-    }
-    @media (max-width: 480px) {
-      .hero-stats { grid-template-columns: 1fr; }
-      .hero-title { font-size: 2.2rem; }
-      section { padding: 70px 0; }
-      .rescue-inner { padding: 36px 24px; }
+    @media(max-width:480px){
+      .hero-stats{grid-template-columns:1fr;}
+      .c-content{padding:48px 24px;}
+      section{padding:64px 0;}
     }
   </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- TOPBAR -->
 <div class="topbar">
-  <div class="container">
-    <div class="contact-info">
+  <div class="container tb-inner">
+    <div class="tb-left">
       <span><i class="bi bi-envelope"></i><a href="mailto:ventas@qsdsoft.com">ventas@qsdsoft.com</a></span>
-      <span><i class="bi bi-phone"></i>+51 921 459 342</span>
-      <span><i class="bi bi-geo-alt"></i>Lima, Perú</span>
+      <span><i class="bi bi-phone"></i>+51 921459342</span>
     </div>
-    <div class="social-links">
-      <a href="#" title="Twitter/X"><i class="bi bi-twitter-x"></i></a>
-      <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
-      <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
-      <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <div class="tb-right">
+      <form class="tb-search" onsubmit="return false;">
+        <input type="search" placeholder="Buscar..." />
+        <button type="button"><i class="bi bi-search"></i></button>
+      </form>
+      <div class="tb-socials">
+        <a href="#"><i class="bi bi-twitter-x"></i></a>
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-linkedin"></i></a>
+        <a href="#"><i class="bi bi-globe2"></i></a>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- HEADER -->
-<header>
-  <div class="branding">
-    <div class="container">
-      <a href="#" class="logo">
-        <div class="logo-mark">Q</div>
-        <span class="logo-text">QSD<span>Soft</span></span>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="#" class="active">Inicio</a></li>
-          <li><a href="#about">Nosotros</a></li>
-          <li><a href="#services">Servicios</a></li>
-          <li><a href="#rescue">Rescate Técnico</a></li>
-          <li><a href="#clients">Clientes</a></li>
-          <li><a href="#contact" class="nav-cta">Contacto</a></li>
-        </ul>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Menú"><i class="bi bi-list"></i></button>
-      </nav>
-    </div>
+<header id="mainHeader">
+  <div class="container hdr-inner">
+    <a href="#" class="logo">
+      <img src="logo_qsd.png" alt="QSD Soft" />
+      <span class="logo-sep"></span>
+      <span class="logo-word">Soft</span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#" class="active">Inicio</a></li>
+        <li><a href="#bi">Soluciones BI</a></li>
+        <li><a href="#services">Servicios</a></li>
+        <li><a href="#about">Acerca de</a></li>
+        <li><a href="#contact" class="nav-cta">Contacto</a></li>
+      </ul>
+      <button class="mob-tog" id="mobTog"><i class="bi bi-list"></i></button>
+    </nav>
   </div>
 </header>
 
 <!-- MOBILE NAV -->
-<div class="mobile-nav" id="mobileNav">
-  <button class="mobile-nav-close" id="mobileClose"><i class="bi bi-x-lg"></i></button>
-  <a href="#" onclick="closeMobile()">Inicio</a>
-  <a href="#about" onclick="closeMobile()">Nosotros</a>
-  <a href="#services" onclick="closeMobile()">Servicios</a>
-  <a href="#rescue" onclick="closeMobile()">Rescate Técnico</a>
-  <a href="#clients" onclick="closeMobile()">Clientes</a>
-  <a href="#contact" onclick="closeMobile()">Contacto</a>
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" id="mobClose"><i class="bi bi-x-lg"></i></button>
+  <a href="#"         onclick="cMob()">Inicio</a>
+  <a href="#bi"       onclick="cMob()">Soluciones BI</a>
+  <a href="#services" onclick="cMob()">Servicios</a>
+  <a href="#about"    onclick="cMob()">Acerca de</a>
+  <a href="#rescue"   onclick="cMob()">Rescate Técnico</a>
+  <a href="#contact"  onclick="cMob()">Contacto</a>
 </div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
-  <div class="hero-grid-lines"></div>
+  <div class="hero-grid"></div>
 
-  <div class="hero-left container" style="grid-column:1;padding-left:24px;padding-right:24px;max-width:680px;">
-    <div class="hero-badge">
-      <i class="bi bi-cpu-fill" style="font-size:0.8rem;"></i>
-      Soluciones Tecnológicas · Lima, Perú
-    </div>
-    <h1 class="hero-title">
-      Transformamos<br><em>ideas</em> en<br>
-      <span class="line2">realidades digitales exitosas</span>
-    </h1>
-    <p class="hero-desc">
-      En QSD Soft combinamos creatividad y tecnología de vanguardia para desarrollar productos y servicios que impulsan a las organizaciones hacia el futuro digital.
-    </p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary"><i class="bi bi-arrow-right-circle"></i>Comenzar proyecto</a>
-      <a href="#services" class="btn-secondary"><i class="bi bi-grid-3x3-gap"></i>Ver servicios</a>
+  <div class="hero-left">
+    <div class="carousel" id="car">
+      <div class="c-item active">
+        <div class="c-bg" style="background-image:url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80&auto=format')"></div>
+        <div class="c-content">
+          <div class="c-badge"><i class="bi bi-lightning-charge-fill"></i> Servicio Crítico</div>
+          <h1 class="c-title">Rescate Técnico y<br>Operativa de <em>Sistemas</em></h1>
+          <p class="c-sub">«Muchos sistemas institucionales siguen operando, pero con alto riesgo por falta de aseguramiento de continuidad de servicio»</p>
+          <p class="c-desc">Intervención especializada para sistemas críticos en funcionamiento: estabilizamos, reducimos riesgos técnicos, de seguridad y operatividad en 30 días.</p>
+          <div class="c-actions">
+            <a href="#rescue" class="btn-p btn-red"><i class="bi bi-shield-check"></i>Solicitar evaluación técnica</a>
+            <a href="https://wa.me/51921459342" class="btn-s" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i>WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <div class="c-item">
+        <div class="c-bg" style="background-image:url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1400&q=80&auto=format')"></div>
+        <div class="c-content">
+          <div class="c-badge"><i class="bi bi-code-slash"></i> Desarrollo</div>
+          <h1 class="c-title">Desarrollo de<br>Software <em>Personalizado</em></h1>
+          <p class="c-sub">«Desarrollamos el software que tu empresa necesita para crecer»</p>
+          <p class="c-desc">Nuestro equipo crea aplicaciones y plataformas que se adaptan perfectamente a tus objetivos, desde sistemas de gestión hasta plataformas web y móviles.</p>
+          <div class="c-actions">
+            <a href="#contact" class="btn-p"><i class="bi bi-arrow-right-circle"></i>Comenzar proyecto</a>
+            <a href="#services" class="btn-s"><i class="bi bi-grid-3x3-gap"></i>Ver servicios</a>
+          </div>
+        </div>
+      </div>
+      <div class="c-item">
+        <div class="c-bg" style="background-image:url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=80&auto=format')"></div>
+        <div class="c-content">
+          <div class="c-badge"><i class="bi bi-bar-chart-line"></i> Business Intelligence</div>
+          <h1 class="c-title">Soluciones BI con<br><em>Power BI</em></h1>
+          <p class="c-sub">«Convertimos tus datos en decisiones estratégicas»</p>
+          <p class="c-desc">Ayudamos a empresas a convertir sus datos en decisiones inteligentes, sin necesidad de bases de datos complejas. Dashboards, KPIs y automatización de reportes.</p>
+          <div class="c-actions">
+            <a href="#bi" class="btn-p"><i class="bi bi-graph-up-arrow"></i>Ver Soluciones BI</a>
+            <a href="#contact" class="btn-s"><i class="bi bi-chat-dots"></i>Contáctanos</a>
+          </div>
+        </div>
+      </div>
+      <button class="c-prev" onclick="moveCar(-1)"><i class="bi bi-chevron-left"></i></button>
+      <button class="c-next" onclick="moveCar(1)"><i class="bi bi-chevron-right"></i></button>
+      <div class="c-dots" id="dots">
+        <span class="active" onclick="goC(0)"></span>
+        <span onclick="goC(1)"></span>
+        <span onclick="goC(2)"></span>
+      </div>
     </div>
   </div>
 
-  <div class="hero-right" style="padding-left:60px;">
-    <div class="featured-card">
-      <span class="badge-featured"><i class="bi bi-lightning-charge-fill"></i> Servicio destacado</span>
+  <div class="hero-right">
+    <div class="feat-card">
+      <div class="feat-badge"><i class="bi bi-lightning-charge-fill"></i> Servicio Destacado</div>
       <h3>Rescate Técnico y Seguridad Operativa</h3>
-      <p>Intervenimos sistemas institucionales críticos. Dejamos control, documentación y estabilidad en 30 días.</p>
-      <ul class="featured-list">
-        <li>Diagnóstico técnico profundo</li>
-        <li>Reducción inmediata de riesgos críticos</li>
-        <li>Corrección de errores en producción</li>
-        <li>Control operativo y trazabilidad</li>
+      <p>Intervenimos sistemas institucionales que funcionan, pero representan riesgos técnicos, operativos o de seguridad. Dejamos control, documentación y estabilidad en 30 días.</p>
+      <ul class="feat-list">
+        <li><i class="bi bi-check-circle-fill"></i>Diagnóstico técnico profundo</li>
+        <li><i class="bi bi-check-circle-fill"></i>Reducción inmediata de riesgos críticos</li>
+        <li><i class="bi bi-check-circle-fill"></i>Corrección de errores en producción</li>
+        <li><i class="bi bi-check-circle-fill"></i>Control operativo y trazabilidad</li>
       </ul>
-      <a href="#rescue" class="btn-primary"><i class="bi bi-shield-check"></i>Solicitar evaluación técnica</a>
+      <a href="#" class="feat-dl"><i class="bi bi-file-earmark-arrow-down"></i>Descargar documento técnico</a>
+      <a href="#rescue" class="btn-p btn-red" style="width:100%;justify-content:center;margin-top:4px;">Solicitar evaluación técnica</a>
     </div>
   </div>
 
   <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-num" data-target="232">0<span>+</span></div>
-      <div class="stat-label">Clientes satisfechos</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" data-target="521">0<span>+</span></div>
-      <div class="stat-label">Proyectos entregados</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" data-target="1453">0<span>+</span></div>
-      <div class="stat-label">Horas de soporte</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" data-target="30">0</div>
-      <div class="stat-label">Días de intervención</div>
-    </div>
+    <div class="stat-box"><div class="stat-n" data-target="232">0<span>+</span></div><div class="stat-l">Clientes satisfechos</div></div>
+    <div class="stat-box"><div class="stat-n" data-target="521">0<span>+</span></div><div class="stat-l">Proyectos entregados</div></div>
+    <div class="stat-box"><div class="stat-n" data-target="1453">0<span>+</span></div><div class="stat-l">Horas de soporte</div></div>
+    <div class="stat-box"><div class="stat-n" data-target="30">0</div><div class="stat-l">Días de intervención</div></div>
   </div>
 </section>
 
 <!-- SERVICES -->
 <section id="services">
   <div class="container">
-    <div class="services-header">
-      <div class="section-label">Lo que hacemos</div>
-      <h2 class="section-title">Nuestros <em>Servicios</em></h2>
-      <p class="section-desc">Soluciones integrales que cubren el ciclo completo de transformación digital de tu organización.</p>
+    <div class="svc-hdr reveal">
+      <div class="sec-label">Lo que hacemos</div>
+      <h2 class="sec-title">Nuestros <em>Servicios</em></h2>
+      <p class="sec-desc">Soluciones integrales que cubren el ciclo completo de transformación digital de tu organización.</p>
     </div>
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <div class="service-icon"><i class="bi bi-cpu"></i></div>
-        <h3>Innovación Tecnológica</h3>
-        <p>Aplicamos las últimas tecnologías para mantenerte a la vanguardia. Transformamos procesos, mejoramos eficiencia y abrimos nuevas oportunidades de negocio.</p>
-        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+    <div class="svc-grid">
+      <div class="svc reveal">
+        <div class="svc-ico"><i class="bi bi-tools"></i></div>
+        <h3>Rescate Técnico y Seguridad Operativa</h3>
+        <p>Intervención especializada para sistemas institucionales con alto riesgo técnico, dependencia de personas y falta de control de seguridad.</p>
+        <a href="#rescue" class="svc-lnk">Conocer más <i class="bi bi-arrow-right"></i></a>
       </div>
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-icon"><i class="bi bi-code-slash"></i></div>
+      <div class="svc reveal d1">
+        <div class="svc-ico"><i class="bi bi-shield-exclamation"></i></div>
+        <h3>Ethical Hacking</h3>
+        <p>Identificamos vulnerabilidades reales en tus sistemas, aplicaciones e infraestructura antes de que sean explotadas por actores maliciosos.</p>
+        <a href="#contact" class="svc-lnk">Conocer más <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="svc reveal d2">
+        <div class="svc-ico"><i class="bi bi-bar-chart"></i></div>
+        <h3>Análisis de Datos</h3>
+        <p>Convertimos datos en conocimiento valioso para decisiones estratégicas. Insights accionables para impulsar el crecimiento de tu empresa.</p>
+        <a href="#bi" class="svc-lnk">Conocer más <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="svc reveal">
+        <div class="svc-ico"><i class="bi bi-code-slash"></i></div>
         <h3>Desarrollo de Software</h3>
-        <p>Transformamos ideas en soluciones robustas. Aplicaciones y sistemas a medida que se adaptan perfectamente a las necesidades de tu negocio.</p>
-        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+        <p>Transformamos ideas en soluciones tecnológicas innovadoras. Aplicaciones y sistemas personalizados adaptados a las necesidades de tu negocio.</p>
+        <a href="#contact" class="svc-lnk">Conocer más <i class="bi bi-arrow-right"></i></a>
       </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-icon"><i class="bi bi-bar-chart-line"></i></div>
-        <h3>Analítica de Datos</h3>
-        <p>Transformamos datos en conocimiento estratégico. Análisis profundo y visualización de datos complejos para decisiones informadas y basadas en evidencia.</p>
-        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+      <div class="svc reveal d1 hi">
+        <div class="svc-ico" style="background:rgba(0,229,255,0.1);border-color:rgba(0,229,255,0.22);"><i class="bi bi-graph-up"></i></div>
+        <h3>Soluciones BI con Power BI</h3>
+        <p>Dashboards personalizados, automatización de reportes y visualización clara de KPIs para producción, mantenimiento y costos.</p>
+        <a href="#bi" class="svc-lnk">Ver Soluciones BI <i class="bi bi-arrow-right"></i></a>
       </div>
-      <div class="service-card reveal">
-        <div class="service-icon"><i class="bi bi-shield-lock"></i></div>
-        <h3>Seguridad Operativa</h3>
-        <p>Protegemos la continuidad de tus sistemas. Auditorías de seguridad, hardening de infraestructura y respuesta a incidentes críticos en producción.</p>
-        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
-      </div>
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-icon"><i class="bi bi-cloud-arrow-up"></i></div>
-        <h3>Infraestructura Cloud</h3>
-        <p>Migración, despliegue y optimización en la nube. Arquitecturas escalables con AWS, Azure o GCP adaptadas a tu presupuesto y necesidades.</p>
-        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-icon"><i class="bi bi-diagram-3"></i></div>
-        <h3>Integración de Sistemas</h3>
-        <p>Conectamos tus plataformas para flujos de trabajo sin fricción. APIs, microservicios y middleware que unifican el ecosistema tecnológico de tu empresa.</p>
-        <a href="#contact" class="service-link">Conocer más <i class="bi bi-arrow-right"></i></a>
+      <div class="svc reveal d2">
+        <div class="svc-ico"><i class="bi bi-cpu"></i></div>
+        <h3>Innovación Tecnológica</h3>
+        <p>Aplicamos las últimas tecnologías para ofrecerte soluciones que impulsan tu negocio hacia el futuro y te mantienen competitivo en el mercado.</p>
+        <a href="#contact" class="svc-lnk">Conocer más <i class="bi bi-arrow-right"></i></a>
       </div>
     </div>
   </div>
@@ -790,69 +479,79 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="container">
-    <div class="about-grid">
-      <div class="about-visual reveal">
-        <div class="about-img-frame">
-          <i class="bi bi-building about-img-placeholder"></i>
-        </div>
-        <div class="about-badge-float">
-          <span class="num">10+</span>
-          <span class="lbl">AÑOS DE EXPERIENCIA</span>
-        </div>
+    <div class="about-g">
+      <div class="about-img reveal">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80&auto=format" alt="Equipo QSD Soft" />
+        <div class="about-bdg"><span class="n">10+</span><span class="l">años experiencia</span></div>
       </div>
-      <div class="about-content reveal">
-        <div class="section-label">Quiénes somos</div>
-        <h2 class="section-title">Sobre <em>QSD Soft</em></h2>
-        <p class="about-desc">
-          En QSD, nos dedicamos a ofrecer soluciones tecnológicas de vanguardia que transforman ideas en realidades exitosas. Con un equipo de expertos comprometidos, combinamos creatividad y tecnología.
-        </p>
-        <ul class="about-list">
+      <div class="reveal d1">
+        <div class="sec-label">Quiénes somos</div>
+        <h2 class="sec-title">Sobre <em>QSD Soft</em></h2>
+        <p class="about-desc">En QSD, nos dedicamos a ofrecer soluciones tecnológicas de vanguardia que transforman ideas en realidades exitosas. Combinamos creatividad y tecnología para desarrollar productos y servicios que responden a las necesidades de un mundo en constante evolución.</p>
+        <ul class="chk-list">
           <li>
-            <div class="icon-check"><i class="bi bi-check2"></i></div>
-            <div>
-              <strong>Innovación Tecnológica</strong>
-              <p>Aplicamos las últimas tecnologías y tendencias para mantenerte a la vanguardia del mercado.</p>
-            </div>
+            <div class="chk-ico"><i class="bi bi-check2"></i></div>
+            <div><strong>Innovación Tecnológica</strong><p>Aplicamos las últimas tecnologías y tendencias para mantenerte a la vanguardia del mercado.</p></div>
           </li>
           <li>
-            <div class="icon-check"><i class="bi bi-check2"></i></div>
-            <div>
-              <strong>Desarrollo de Software Personalizado</strong>
-              <p>Creamos aplicaciones y sistemas a medida que impulsan la eficiencia de tu negocio.</p>
-            </div>
+            <div class="chk-ico"><i class="bi bi-check2"></i></div>
+            <div><strong>Desarrollo de Software Personalizado</strong><p>Creamos aplicaciones y sistemas a medida que impulsan la eficiencia y efectividad de tu negocio.</p></div>
           </li>
           <li>
-            <div class="icon-check"><i class="bi bi-check2"></i></div>
-            <div>
-              <strong>Analítica de Datos Avanzada</strong>
-              <p>Transformamos tus datos en insights valiosos para decisiones estratégicas basadas en evidencia.</p>
-            </div>
+            <div class="chk-ico"><i class="bi bi-check2"></i></div>
+            <div><strong>Analítica de Datos Avanzada</strong><p>Transformamos tus datos en insights valiosos para decisiones estratégicas basadas en evidencia.</p></div>
           </li>
         </ul>
-        <a href="#contact" class="btn-primary"><i class="bi bi-chat-dots"></i>Contáctanos hoy</a>
+        <p style="font-size:.87rem;color:var(--c-muted);margin-bottom:26px;">En QSD, tu éxito es nuestro objetivo. Descubre cómo podemos ayudarte a alcanzar nuevas alturas en el mundo digital. ¡Contáctanos hoy!</p>
+        <a href="#contact" class="btn-p"><i class="bi bi-chat-dots"></i>Contáctanos hoy</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- RESCUE TÉCNICO -->
+<!-- SOLUCIONES BI -->
+<section id="bi">
+  <div class="container">
+    <div class="bi-g">
+      <div class="reveal">
+        <div class="sec-label">Power BI</div>
+        <h2 class="sec-title">Soluciones BI con <em>Power BI</em></h2>
+        <p class="sec-desc">En QSD Soft, ayudamos a empresas a convertir sus datos en decisiones inteligentes, incluso en entornos sin bases de datos complejas.</p>
+        <ul class="bi-list">
+          <li><i class="bi bi-check-circle-fill"></i>Dashboards personalizados con Power BI</li>
+          <li><i class="bi bi-check-circle-fill"></i>Automatización de reportes a partir de archivos Excel</li>
+          <li><i class="bi bi-check-circle-fill"></i>Visualización clara de KPIs de producción, mantenimiento y costos</li>
+          <li><i class="bi bi-check-circle-fill"></i>Soluciones implementadas en empresas mineras peruanas</li>
+        </ul>
+        <p class="bi-cta">¿Tu empresa aún trabaja con reportes manuales? Nosotros transformamos tus archivos en potentes herramientas de análisis sin necesidad de infraestructura compleja.</p>
+        <a href="#contact" class="btn-p"><i class="bi bi-graph-up-arrow"></i>Solicitar demo</a>
+      </div>
+      <div class="bi-img reveal d1">
+        <div class="bi-img-ph"><i class="bi bi-bar-chart-line-fill"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESCUE -->
 <section id="rescue">
   <div class="container">
-    <div class="rescue-inner reveal">
-      <div class="section-label"><i class="bi bi-lightning-charge-fill"></i> Servicio Crítico</div>
-      <h2 class="section-title">Rescate Técnico y<br><em>Seguridad Operativa</em></h2>
-      <p class="section-desc">
-        Intervenimos sistemas institucionales que funcionan, pero representan riesgos técnicos, operativos o de seguridad. Dejamos control, documentación y estabilidad en <strong style="color:var(--c-accent);">30 días</strong>.
-      </p>
-      <div class="rescue-grid">
-        <div class="rescue-item"><i class="bi bi-search"></i>Diagnóstico técnico profundo</div>
-        <div class="rescue-item"><i class="bi bi-shield-exclamation"></i>Reducción inmediata de riesgos críticos</div>
-        <div class="rescue-item"><i class="bi bi-bug"></i>Corrección de errores en producción</div>
-        <div class="rescue-item"><i class="bi bi-clipboard-check"></i>Control operativo y trazabilidad</div>
-        <div class="rescue-item"><i class="bi bi-file-earmark-text"></i>Documentación técnica completa</div>
-        <div class="rescue-item"><i class="bi bi-arrow-repeat"></i>Continuidad del servicio garantizada</div>
+    <div class="rescue-box reveal">
+      <div class="sec-label"><i class="bi bi-lightning-charge-fill"></i> Servicio Crítico</div>
+      <h2 class="sec-title">Rescate Técnico y<br><em>Seguridad Operativa</em></h2>
+      <p class="sec-desc">Intervenimos sistemas institucionales que funcionan, pero representan riesgos técnicos, operativos o de seguridad. Dejamos control, documentación y estabilidad en <strong style="color:var(--c-accent)">30 días</strong>.</p>
+      <div class="rg">
+        <div class="ri"><i class="bi bi-search"></i>Diagnóstico técnico profundo</div>
+        <div class="ri"><i class="bi bi-shield-exclamation"></i>Reducción inmediata de riesgos críticos</div>
+        <div class="ri"><i class="bi bi-bug"></i>Corrección de errores en producción</div>
+        <div class="ri"><i class="bi bi-clipboard-check"></i>Control operativo y trazabilidad</div>
+        <div class="ri"><i class="bi bi-file-earmark-text"></i>Documentación técnica completa</div>
+        <div class="ri"><i class="bi bi-arrow-repeat"></i>Continuidad del servicio garantizada</div>
       </div>
-      <a href="#contact" class="btn-primary" style="display:inline-flex;"><i class="bi bi-calendar-check"></i>Solicitar evaluación técnica</a>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <a href="#contact" class="btn-p btn-red"><i class="bi bi-calendar-check"></i>Solicitar evaluación técnica</a>
+        <a href="https://wa.me/51921459342" class="btn-s" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i>WhatsApp directo</a>
+      </div>
     </div>
   </div>
 </section>
@@ -860,46 +559,45 @@
 <!-- CLIENTS -->
 <section id="clients">
   <div class="container">
-    <div class="clients-header reveal">
-      <div class="section-label">Quienes confían en nosotros</div>
-      <h2 class="section-title">Nuestros <em>Clientes</em></h2>
-      <p class="section-desc">Desde pequeñas empresas emergentes hasta grandes corporaciones, cada cliente aporta un desafío único que nos permite demostrar nuestra capacidad.</p>
+    <div class="cl-hdr reveal">
+      <div class="sec-label">Quienes confían en nosotros</div>
+      <h2 class="sec-title">Nuestros <em>Clientes</em></h2>
+      <p class="sec-desc">Desde pequeñas empresas emergentes hasta grandes corporaciones, cada cliente aporta un desafío único que nos permite demostrar nuestra capacidad.</p>
     </div>
   </div>
-  <div class="clients-track-wrap reveal">
-    <div class="clients-track" id="clientsTrack">
-      <div class="client-logo">Empresa A</div>
-      <div class="client-logo">TechCorp</div>
-      <div class="client-logo">DataPro</div>
-      <div class="client-logo">NetSolutions</div>
-      <div class="client-logo">InnovatePE</div>
-      <div class="client-logo">SysGroup</div>
-      <div class="client-logo">CloudBase</div>
-      <div class="client-logo">DigitalHub</div>
-      <!-- duplicated for infinite scroll -->
-      <div class="client-logo">Empresa A</div>
-      <div class="client-logo">TechCorp</div>
-      <div class="client-logo">DataPro</div>
-      <div class="client-logo">NetSolutions</div>
-      <div class="client-logo">InnovatePE</div>
-      <div class="client-logo">SysGroup</div>
-      <div class="client-logo">CloudBase</div>
-      <div class="client-logo">DigitalHub</div>
+  <div class="cl-wrap reveal">
+    <div class="cl-track">
+      <div class="cl-logo">ECOSEM</div>
+      <div class="cl-logo">Minera Andina</div>
+      <div class="cl-logo">TechCorp PE</div>
+      <div class="cl-logo">DataPro</div>
+      <div class="cl-logo">InnovatePE</div>
+      <div class="cl-logo">SysGroup</div>
+      <div class="cl-logo">CloudBase</div>
+      <div class="cl-logo">DigitalHub</div>
+      <div class="cl-logo">ECOSEM</div>
+      <div class="cl-logo">Minera Andina</div>
+      <div class="cl-logo">TechCorp PE</div>
+      <div class="cl-logo">DataPro</div>
+      <div class="cl-logo">InnovatePE</div>
+      <div class="cl-logo">SysGroup</div>
+      <div class="cl-logo">CloudBase</div>
+      <div class="cl-logo">DigitalHub</div>
     </div>
   </div>
 </section>
 
-<!-- NEWSLETTER STRIP -->
-<div class="newsletter-strip">
+<!-- NEWSLETTER -->
+<div class="nl-strip">
   <div class="container">
-    <div class="newsletter-inner">
-      <div class="newsletter-text">
+    <div class="nl-in">
+      <div class="nl-txt">
         <h3>Únase a nuestro boletín</h3>
-        <p>Recibe las últimas novedades sobre tecnología, servicios y casos de éxito.</p>
+        <p>Suscríbete y recibe las últimas novedades sobre nuestros productos y servicios.</p>
       </div>
-      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+      <form class="nl-form" onsubmit="hdNL(event)">
         <input type="email" placeholder="tucorreo@empresa.com" required />
-        <button type="submit" class="btn-primary"><i class="bi bi-send"></i>Suscribirse</button>
+        <button type="submit" class="btn-p"><i class="bi bi-send"></i>Suscribirse</button>
       </form>
     </div>
   </div>
@@ -908,85 +606,58 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="container">
-    <div class="contact-grid">
-      <div class="contact-info-col reveal">
-        <div class="section-label">Hablemos</div>
-        <h2 class="section-title">Inicia tu<br><em>proyecto hoy</em></h2>
-        <p class="section-desc">Cuéntanos tu desafío. Nuestro equipo te responderá en menos de 24 horas con una propuesta inicial.</p>
-
-        <div class="contact-detail">
-          <div class="contact-detail-icon"><i class="bi bi-envelope-fill"></i></div>
-          <div class="contact-detail-text">
-            <strong>Email</strong>
-            <a href="mailto:ventas@qsdsoft.com">ventas@qsdsoft.com</a>
-          </div>
+    <div class="ct-g">
+      <div class="reveal">
+        <div class="sec-label">Hablemos</div>
+        <h2 class="sec-title" style="font-size:clamp(1.65rem,2.4vw,2.2rem)">Inicia tu<br><em>proyecto hoy</em></h2>
+        <p class="sec-desc" style="margin-bottom:28px;">Cuéntanos tu desafío. Nuestro equipo te responderá en menos de 24 horas.</p>
+        <div class="ct-d">
+          <div class="ct-ico"><i class="bi bi-envelope-fill"></i></div>
+          <div class="ct-txt"><strong>Email</strong><a href="mailto:ventas@qsdsoft.com">ventas@qsdsoft.com</a></div>
         </div>
-        <div class="contact-detail">
-          <div class="contact-detail-icon"><i class="bi bi-telephone-fill"></i></div>
-          <div class="contact-detail-text">
-            <strong>Teléfono / WhatsApp</strong>
-            <a href="tel:+51921459342">+51 921 459 342</a>
-          </div>
+        <div class="ct-d">
+          <div class="ct-ico"><i class="bi bi-telephone-fill"></i></div>
+          <div class="ct-txt"><strong>Teléfono / WhatsApp</strong><a href="tel:+51921459342">+51 921 459 342</a></div>
         </div>
-        <div class="contact-detail">
-          <div class="contact-detail-icon"><i class="bi bi-geo-alt-fill"></i></div>
-          <div class="contact-detail-text">
-            <strong>Dirección</strong>
-            <span>Av. Metropolitana 1753, Lima Ate, Lima</span>
-          </div>
+        <div class="ct-d">
+          <div class="ct-ico"><i class="bi bi-geo-alt-fill"></i></div>
+          <div class="ct-txt"><strong>Dirección</strong><span>Av. Metropolitana 1753, Lima Ate, Lima</span></div>
         </div>
-        <div class="contact-social">
-          <a href="#" class="social-btn" title="Twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="social-btn" title="Facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="social-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="social-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
-          <a href="https://wa.me/51921459342" class="social-btn" title="WhatsApp" style="background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.3);color:#25D366;"><i class="bi bi-whatsapp"></i></a>
+        <div class="ct-soc">
+          <a href="#" class="soc-btn"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="soc-btn"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="soc-btn"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="soc-btn"><i class="bi bi-linkedin"></i></a>
+          <a href="https://wa.me/51921459342" class="soc-btn wa" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i></a>
         </div>
       </div>
-
-      <div class="contact-form-wrap reveal">
-        <div class="contact-form">
-          <form id="contactForm" onsubmit="handleContact(event)">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" name="name" placeholder="Tu nombre" required />
-              </div>
-              <div class="form-group">
-                <label>Empresa</label>
-                <input type="text" name="company" placeholder="Nombre de empresa" />
-              </div>
+      <div class="reveal d1">
+        <div class="ct-form">
+          <form id="ctForm" onsubmit="hdCt(event)">
+            <div class="fg-row">
+              <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre" required /></div>
+              <div class="fg"><label>Empresa</label><input type="text" placeholder="Nombre de empresa" /></div>
             </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" placeholder="correo@empresa.com" required />
-              </div>
-              <div class="form-group">
-                <label>Teléfono</label>
-                <input type="tel" name="phone" placeholder="+51 9xx xxx xxx" />
-              </div>
+            <div class="fg-row">
+              <div class="fg"><label>Email</label><input type="email" placeholder="correo@empresa.com" required /></div>
+              <div class="fg"><label>Teléfono</label><input type="tel" placeholder="+51 9xx xxx xxx" /></div>
             </div>
-            <div class="form-group">
+            <div class="fg">
               <label>Servicio de interés</label>
-              <select name="service">
+              <select>
                 <option value="">Selecciona un servicio...</option>
-                <option value="rescate">Rescate Técnico y Seguridad Operativa</option>
-                <option value="software">Desarrollo de Software</option>
-                <option value="datos">Analítica de Datos</option>
-                <option value="cloud">Infraestructura Cloud</option>
-                <option value="innovacion">Innovación Tecnológica</option>
-                <option value="otro">Otro</option>
+                <option>Rescate Técnico y Seguridad Operativa</option>
+                <option>Ethical Hacking</option>
+                <option>Desarrollo de Software</option>
+                <option>Soluciones BI con Power BI</option>
+                <option>Análisis de Datos</option>
+                <option>Innovación Tecnológica</option>
+                <option>Otro</option>
               </select>
             </div>
-            <div class="form-group">
-              <label>Mensaje</label>
-              <textarea name="message" placeholder="Cuéntanos sobre tu proyecto o desafío..." required></textarea>
-            </div>
-            <button type="submit" class="form-submit">
-              <i class="bi bi-send-fill"></i>Enviar mensaje
-            </button>
-            <div class="form-status" id="formStatus"></div>
+            <div class="fg"><label>Mensaje</label><textarea placeholder="Cuéntanos sobre tu proyecto o desafío..." required></textarea></div>
+            <button type="submit" class="f-sub"><i class="bi bi-send-fill"></i>Enviar mensaje</button>
+            <div class="f-st" id="fst"></div>
           </form>
         </div>
       </div>
@@ -997,16 +668,17 @@
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="logo">
-          <div class="logo-mark">Q</div>
-          <span class="logo-text">QSD<span>Soft</span></span>
-        </div>
+    <div class="ft-g">
+      <div class="ft-brand">
+        <a href="#" class="logo">
+          <img src="logo_qsd.png" alt="QSD Soft" />
+          <span class="logo-sep"></span>
+          <span class="logo-word">Soft</span>
+        </a>
         <p>Soluciones tecnológicas de vanguardia que transforman ideas en realidades exitosas. Lima, Perú.</p>
-        <div class="footer-contact">
+        <div class="ft-c">
           <p><strong>Av. Metropolitana 1753, Lima Ate</strong></p>
-          <p><strong>Phone:</strong> +51 921 459 342</p>
+          <p><strong>Tel:</strong> +51 921 459 342</p>
           <p><strong>Email:</strong> ventas@qsdsoft.com</p>
         </div>
       </div>
@@ -1014,150 +686,118 @@
         <h4>Navegación</h4>
         <ul>
           <li><a href="#"><i class="bi bi-chevron-right"></i>Inicio</a></li>
-          <li><a href="#about"><i class="bi bi-chevron-right"></i>Nosotros</a></li>
-          <li><a href="#services"><i class="bi bi-chevron-right"></i>Servicios</a></li>
+          <li><a href="#about"><i class="bi bi-chevron-right"></i>Acerca de</a></li>
+          <li><a href="#bi"><i class="bi bi-chevron-right"></i>Soluciones BI</a></li>
+          <li><a href="#rescue"><i class="bi bi-chevron-right"></i>Rescate Técnico</a></li>
           <li><a href="#contact"><i class="bi bi-chevron-right"></i>Contacto</a></li>
         </ul>
       </div>
       <div>
         <h4>Servicios</h4>
         <ul>
-          <li><a href="#rescue"><i class="bi bi-chevron-right"></i>Rescate Técnico</a></li>
+          <li><a href="#services"><i class="bi bi-chevron-right"></i>Rescate Técnico</a></li>
+          <li><a href="#services"><i class="bi bi-chevron-right"></i>Ethical Hacking</a></li>
           <li><a href="#services"><i class="bi bi-chevron-right"></i>Desarrollo Software</a></li>
-          <li><a href="#services"><i class="bi bi-chevron-right"></i>Analítica de Datos</a></li>
-          <li><a href="#services"><i class="bi bi-chevron-right"></i>Cloud & Infra</a></li>
+          <li><a href="#services"><i class="bi bi-chevron-right"></i>Análisis de Datos</a></li>
+          <li><a href="#bi"><i class="bi bi-chevron-right"></i>Soluciones BI</a></li>
         </ul>
       </div>
       <div>
         <h4>Síguenos</h4>
-        <p style="font-size:0.85rem;color:var(--c-muted);margin-bottom:14px;">Mantente al día con nuestras novedades.</p>
-        <div class="contact-social">
-          <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="social-btn"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="social-btn"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+        <p style="font-size:.81rem;color:var(--c-muted);margin-bottom:12px;">Mantente al día con nuestras novedades tecnológicas.</p>
+        <div class="ct-soc">
+          <a href="#" class="soc-btn"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="soc-btn"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="soc-btn"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="soc-btn"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>© <span id="year"></span> <strong>QSD Soft</strong>. Todos los derechos reservados.</p>
-      <p>Diseñado y desarrollado por <a href="https://qsdsoft.com">QSD Soft</a></p>
+    <div class="ft-bot">
+      <p>© <span id="yr"></span> <strong>QSD Soft</strong>. Todos los derechos reservados.</p>
+      <p>Diseñado por <a href="https://qsdsoft.com">QSD Soft</a></p>
     </div>
   </div>
 </footer>
 
-<!-- SCROLL TOP -->
-<a href="#" id="scroll-top"><i class="bi bi-arrow-up-short"></i></a>
-
-<!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/51921459342" class="whatsapp-float" target="_blank" rel="noopener" title="Escríbenos por WhatsApp">
-  <i class="bi bi-whatsapp"></i>
-</a>
+<a href="#" id="stb"><i class="bi bi-arrow-up-short"></i></a>
+<a href="https://wa.me/51921459342" class="wa-fab" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i></a>
 
 <script>
-  // ─── YEAR
-  document.getElementById('year').textContent = new Date().getFullYear();
+  // AÑO
+  document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // ─── MOBILE NAV
-  document.getElementById('mobileToggle').addEventListener('click', () => {
-    document.getElementById('mobileNav').classList.add('open');
-  });
-  document.getElementById('mobileClose').addEventListener('click', () => {
-    document.getElementById('mobileNav').classList.remove('open');
-  });
-  function closeMobile() {
-    document.getElementById('mobileNav').classList.remove('open');
+  // HEADER HEIGHT → CSS variable (hero sin espacio en blanco)
+  function setHdrH() {
+    const h = document.getElementById('mainHeader').getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--hdr-h', h + 'px');
   }
+  if (document.readyState === 'complete') { setHdrH(); }
+  else { window.addEventListener('load', setHdrH); }
+  window.addEventListener('resize', setHdrH);
 
-  // ─── SCROLL TOP
-  const scrollTop = document.getElementById('scroll-top');
+  // MOBILE NAV
+  document.getElementById('mobTog').onclick  = () => document.getElementById('mobNav').classList.add('open');
+  document.getElementById('mobClose').onclick = () => document.getElementById('mobNav').classList.remove('open');
+  function cMob() { document.getElementById('mobNav').classList.remove('open'); }
+
+  // SCROLL TOP
   window.addEventListener('scroll', () => {
-    scrollTop.classList.toggle('visible', window.scrollY > 400);
+    document.getElementById('stb').classList.toggle('on', window.scrollY > 400);
   });
 
-  // ─── COUNTER ANIMATION
-  function animateCounter(el) {
-    const target = parseInt(el.dataset.target);
-    const suffix = el.querySelector('span')?.outerHTML || '';
-    const textOnly = el.innerHTML.replace(/<[^>]+>/g, '');
-    let current = 0;
-    const increment = Math.ceil(target / 60);
-    const timer = setInterval(() => {
-      current = Math.min(current + increment, target);
-      el.innerHTML = current.toLocaleString() + suffix;
-      if (current >= target) clearInterval(timer);
-    }, 20);
+  // CAROUSEL
+  let cur = 0;
+  const items = document.querySelectorAll('.c-item');
+  const dots  = document.querySelectorAll('.c-dots span');
+  let carTimer = setInterval(() => moveCar(1), 5500);
+  function goC(n) {
+    items[cur].classList.remove('active'); dots[cur].classList.remove('active');
+    cur = (n + items.length) % items.length;
+    items[cur].classList.add('active'); dots[cur].classList.add('active');
+  }
+  function moveCar(d) { clearInterval(carTimer); goC(cur + d); carTimer = setInterval(() => moveCar(1), 5500); }
+
+  // COUNTERS
+  function animCtr(el) {
+    const tgt = parseInt(el.dataset.target);
+    const sfx = el.querySelector('span') ? el.querySelector('span').outerHTML : '';
+    let v = 0; const inc = Math.ceil(tgt / 55);
+    const t = setInterval(() => { v = Math.min(v + inc, tgt); el.innerHTML = v.toLocaleString() + sfx; if (v >= tgt) clearInterval(t); }, 22);
   }
 
-  // ─── INTERSECTION OBSERVER
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        // trigger counters
-        entry.target.querySelectorAll && entry.target.querySelectorAll('[data-target]').forEach(animateCounter);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
+  // REVEAL ON SCROLL
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); ro.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // STATS TRIGGER
+  const so = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('[data-target]').forEach(animCtr); so.unobserve(e.target); } });
+  }, { threshold: 0.3 });
+  const hs = document.querySelector('.hero-stats');
+  if (hs) so.observe(hs);
 
-  // Observe stats
-  const heroStats = document.querySelector('.hero-stats');
-  if (heroStats) {
-    const statsObs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('[data-target]').forEach(animateCounter);
-          statsObs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    statsObs.observe(heroStats);
-  }
-
-  // ─── CONTACT FORM
-  function handleContact(e) {
+  // CONTACT FORM
+  function hdCt(e) {
     e.preventDefault();
-    const status = document.getElementById('formStatus');
-    const btn = e.target.querySelector('.form-submit');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="bi bi-hourglass-split"></i>Enviando...';
+    const st = document.getElementById('fst'), btn = e.target.querySelector('.f-sub');
+    btn.disabled = true; btn.innerHTML = '<i class="bi bi-hourglass-split"></i>Enviando...';
     setTimeout(() => {
-      status.className = 'form-status success';
-      status.textContent = '¡Mensaje enviado! Te responderemos en menos de 24 horas.';
-      btn.disabled = false;
-      btn.innerHTML = '<i class="bi bi-send-fill"></i>Enviar mensaje';
+      st.className = 'f-st ok'; st.textContent = '¡Mensaje enviado! Te responderemos en menos de 24 horas.';
+      btn.disabled = false; btn.innerHTML = '<i class="bi bi-send-fill"></i>Enviar mensaje';
       e.target.reset();
     }, 1200);
   }
 
-  // ─── NEWSLETTER
-  function handleNewsletter(e) {
+  // NEWSLETTER
+  function hdNL(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button');
-    btn.innerHTML = '<i class="bi bi-check-circle-fill"></i>¡Suscrito!';
-    btn.style.background = '#25D366';
-    setTimeout(() => {
-      btn.innerHTML = '<i class="bi bi-send"></i>Suscribirse';
-      btn.style.background = '';
-      e.target.reset();
-    }, 3000);
+    btn.innerHTML = '<i class="bi bi-check-circle-fill"></i>¡Suscrito!'; btn.style.background = '#25D366';
+    setTimeout(() => { btn.innerHTML = '<i class="bi bi-send"></i>Suscribirse'; btn.style.background = ''; e.target.reset(); }, 3000);
   }
-
-  // ─── ACTIVE NAV on scroll
-  const sections = document.querySelectorAll('section[id], div[id="contact"]');
-  const navLinks = document.querySelectorAll('nav ul li a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current || (current === '' && a.getAttribute('href') === '#'));
-    });
-  });
 </script>
 </body>
 </html>

@@ -2,6 +2,7 @@ FROM nginx:alpine
 
 # Copy static files
 COPY index.html /usr/share/nginx/html/index.html
+COPY logo_qsd.png /usr/share/nginx/html/logo_qsd.png
 
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
